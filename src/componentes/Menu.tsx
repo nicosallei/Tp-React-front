@@ -25,13 +25,13 @@ function Menu() {
         <ItemInstrumento
           key={instrumento.id}
           id={instrumento.id}
-          nombre={instrumento.instrumento}
+          instrumento={instrumento.instrumento}
           marca={instrumento.marca}
           modelo={instrumento.modelo}
           imagen={instrumento.imagen}
           precio={instrumento.precio.toString()}
           descripcion={instrumento.descripcion}
-          cantidades={instrumento.cantidadVendida}
+          cantidadVendida={instrumento.cantidadVendida}
           costoEnvio={instrumento.costoEnvio}
         />
       ))}

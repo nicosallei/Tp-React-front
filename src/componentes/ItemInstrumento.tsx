@@ -1,20 +1,8 @@
 
 import '../componentes/css/ItemInstrumento.css'
+import InstrumentoParams from "../entidades/Instrumento";
 
 
-type InstrumentoParams = {
-  
-    id: number;
-    nombre: string;
-    marca: string;
-    modelo: string;
-    imagen: string;
-    precio: string;
-    descripcion: string;
-    cantidades: string;
-    costoEnvio: string;
-  
-};
 
 
 function ItemInstrumento(arg: InstrumentoParams) {
@@ -54,12 +42,12 @@ function ItemInstrumento(arg: InstrumentoParams) {
           </div>
           <div className="col-md-8">
             <div className="card-body mi-contenido">
-              <h5 className="card-title">{arg.nombre}</h5>
+              <h5 className="card-title">{arg.instrumento}</h5>
               <p className="card-text">Precio: ${arg.precio}</p>
               <p className="card-text">
                   {renderCostoEnvio()}
               </p>
-              <p className="card-text">vendidos: {arg.cantidades}</p>
+              <p className="card-text">vendidos: {arg.cantidadVendida}</p>
               <a href={`detalle/${arg.id}`}>
                 <button type="button" className="btn btn-warning">Detalle</button>
                </a>
