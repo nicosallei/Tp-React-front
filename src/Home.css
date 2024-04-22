@@ -1,0 +1,39 @@
+.mi-clase-home {
+    /* Tus estilos personalizados aquí */
+    background-color: #f1f1f1; /* Color de fondo gris claro */
+    padding: 20px; /* Espaciado interno de 20px */
+    margin-top: 20px; /* Espaciado superior de 20px */
+    margin-bottom: 20px; /* Espaciado inferior de 20px */
+    border: 1px solid #e1e1e1; /* Borde de 1px sólido gris claro */
+    border-radius: 5px; /* Bordes redondeados de 5px */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra de 0px en el eje X, 2px en el eje Y, 4px de desenfoque y 10% de opacidad */
+    text-align: center; /* Alineación centrada del texto */
+    font-size: 18px; /* Tamaño del texto de 18px */
+    font-weight: 500; /* Grosor del texto de 500 */
+    color: #333; /* Color del texto gris oscuro */
+   
+   
+}
+
+.carrusel {
+    width: 100%; /* Cambia este valor a 100% */
+    
+}
+
+.imagen {
+    width: 90vw; /* Cambia este valor a 100% */
+    height: 50vh; /* Cambia este valor a auto */
+    
+    object-position: center; 
+}
+.mi-boton-prev, .mi-boton-next {
+    background-color: rgba(0, 0, 0, 0.5); /* Cambia el color de fondo a negro con 50% de opacidad */
+    color: white; /* Cambia el color del texto a blanco */
+    width: 50px; /* Cambia el ancho del botón */
+    height: 50px; /* Cambia la altura del botón */
+}
+.mi-boton-prev, .mi-boton-next {
+    top: 50%; /* Posiciona los botones en el medio verticalmente */
+    transform: translateY(-50%); /* Centra los botones verticalmente */
+    /* Resto de tus estilos */
+}

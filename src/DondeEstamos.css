@@ -1,0 +1,19 @@
+
+.mapa {
+    width: calc(100vw - 100px);
+    height: calc(100vh - 300px);
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Agrega una sombra con color negro y opacidad 0.5 */
+}
+
+.mapa iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.donde-estamos h1 {
+    text-align: center; /* Centra el texto horizontalmente */
+}

@@ -1,0 +1,83 @@
+#root {
+  display: flex;
+  max-width: 1920px;
+  padding: 2rem;
+  text-align: left;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+
+  .card {
+    padding: 2em;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 1em;
+    box-shadow: 0 0 1em #0003;
+  }
+
+
+
+.read-the-docs {
+  color: #888;
+}
+
+.navbar {
+  background-color: #e3f2fd;
+  margin-bottom: 20px;
+  max-width: 100%;
+  width: 100%;
+  border-radius: 1em;
+  box-shadow: 0 0 1em #0003;
+  display: flex; /* Convierte el contenedor en un contenedor flexbox */
+  justify-content: center; /* Centra los elementos hijos horizontalmente */
+    /* tus otros estilos aquí */
+  
+}
+
+.nav-link {
+  transition: all 0.3s ease; /* Añade una transición suave a todos los cambios de estilo */
+  padding: 10px 15px; /* Añade un poco de padding para hacer el enlace más grande */
+  border-radius: 5px; /* Añade bordes redondeados para que parezca un botón */
+  transition: all 0.3s ease; /* Añade una transición suave a todos los cambios de estilo */
+  padding: 10px 15px; /* Añade un poco de padding para hacer el enlace más grande */
+  border-radius: 5px; /* Añade bordes redondeados para que parezca un botón */
+  text-align: center; /* Centra el texto dentro del enlace */
+  margin: 0 10px; /* Añade un poco de margen entre los enlaces */
+  
+
+}
+
+.nav-link:hover {
+  background-color: #c0d6e4; /* Un color más oscuro que #e3f2fd */
+  color: white; /* Cambia el color del texto a blanco al pasar el cursor */
+  text-decoration: none; /* Elimina el subrayado al pasar el cursor */
+  transform: scale(1.05); /* Aumenta un poco el tamaño del enlace al pasar el cursor */
+}
