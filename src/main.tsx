@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Producto from "./componentes/Menu.tsx";
 import DetalleInstrumento from "./componentes/DetalleInstrumento.tsx";
 import Home from "./Home.tsx";
 import DondeEstamos from "./DondeEstamos.tsx";
+import GrillaInstrumento from "./componentes/GrillaInstrumento.tsx";
+import Formulario from "./componentes/Formulario.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -19,7 +20,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/detalle">
           <Route path=":idInstrumento" element={<DetalleInstrumento />} />
         </Route>
-
+        <Route path="/grilla" element={<GrillaInstrumento />} />
+        <Route path="/formulario/:idInstrumento" element={<Formulario />} />
         <Route path="*" element={<Producto />} />
       </Routes>
     </BrowserRouter>
