@@ -17,26 +17,27 @@ function Menu() {
   }, []);
 
   return (
-<>
-
-    <div >
-    <MenuOpciones></MenuOpciones>
-      {instrumentos.map((instrumento: Instrumento) => (
-        <ItemInstrumento
-          key={instrumento.id}
-          id={instrumento.id}
-          instrumento={instrumento.instrumento}
-          marca={instrumento.marca}
-          modelo={instrumento.modelo}
-          imagen={instrumento.imagen}
-          precio={instrumento.precio.toString()}
-          descripcion={instrumento.descripcion}
-          cantidadVendida={instrumento.cantidadVendida}
-          costoEnvio={instrumento.costoEnvio}
-        />
-      ))}
-    </div>
-</>
+    <>
+      <div>
+        <MenuOpciones></MenuOpciones>
+        <div className="container-fluid ">
+          {instrumentos.map((instrumento: Instrumento) => (
+            <ItemInstrumento
+              key={instrumento.id}
+              id={instrumento.id}
+              instrumento={instrumento.instrumento}
+              marca={instrumento.marca}
+              modelo={instrumento.modelo}
+              imagen={instrumento.imagen}
+              precio={instrumento.precio}
+              descripcion={instrumento.descripcion}
+              cantidadVendida={instrumento.cantidadVendida}
+              costoEnvio={instrumento.costoEnvio}
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 export default Menu;
