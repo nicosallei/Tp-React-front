@@ -25,6 +25,7 @@ function Formulario() {
         Number(idInstrumento)
       );
       setInstrumento(instrumentoSelect);
+      setCodigoCategoria(instrumentoSelect.categoria?.codigo || 0); // Add this line
     }
   };
 
@@ -104,123 +105,140 @@ function Formulario() {
   };
   return (
     <>
-      <MenuOpciones></MenuOpciones>
-      <div className="container">
-        <h1>Formulario</h1>
-        <div className="mb-3">
-          <label className="form-label">Nombre</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.instrumento}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, instrumento: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Marca</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.marca}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, marca: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Modelo</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.modelo}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, modelo: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Imagen</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.imagen}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, imagen: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Precio</label>
-          <input
-            type="number"
-            className="form-control"
-            value={instrumento.precio}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, precio: Number(e.target.value) })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Costo de envio</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.costoEnvio}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, costoEnvio: e.target.value })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Cantidad vendida</label>
-          <input
-            type="number"
-            className="form-control"
-            value={instrumento.cantidadVendida}
-            onChange={(e) =>
-              setInstrumento({
-                ...instrumento,
-                cantidadVendida: Number(e.target.value),
-              })
-            }
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Descripcion</label>
-          <input
-            type="text"
-            className="form-control"
-            value={instrumento.descripcion}
-            onChange={(e) =>
-              setInstrumento({ ...instrumento, descripcion: e.target.value })
-            }
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Categoria</label>
-          <select
-            className="form-select"
-            value={codigoCategoria}
-            onChange={handleCategoriaChange}
-          >
-            {categorias.map((categoria) => (
-              <option key={categoria.codigo} value={categoria.codigo}>
-                {categoria.denominacion}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <button className="btn btn-primary" onClick={save}>
-            Guardar
-          </button>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">{txtValidacion}</label>
+      <div className="container-fluid">
+        <MenuOpciones></MenuOpciones>
+        <div className="container">
+          <h1 className="text-left">Formulario</h1>
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="mb-3">
+                <label className="form-label">Nombre</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.instrumento}
+                  onChange={(e) =>
+                    setInstrumento({
+                      ...instrumento,
+                      instrumento: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Marca</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.marca}
+                  onChange={(e) =>
+                    setInstrumento({ ...instrumento, marca: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Modelo</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.modelo}
+                  onChange={(e) =>
+                    setInstrumento({ ...instrumento, modelo: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Imagen</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.imagen}
+                  onChange={(e) =>
+                    setInstrumento({ ...instrumento, imagen: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Precio</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={instrumento.precio || ""}
+                  onChange={(e) =>
+                    setInstrumento({
+                      ...instrumento,
+                      precio: Number(e.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Costo de envio</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.costoEnvio}
+                  onChange={(e) =>
+                    setInstrumento({
+                      ...instrumento,
+                      costoEnvio: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Cantidad vendida</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={instrumento.cantidadVendida || ""}
+                  onChange={(e) =>
+                    setInstrumento({
+                      ...instrumento,
+                      cantidadVendida: Number(e.target.value),
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Descripcion</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={instrumento.descripcion}
+                  onChange={(e) =>
+                    setInstrumento({
+                      ...instrumento,
+                      descripcion: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Categoria</label>
+                <select
+                  className="form-select"
+                  value={codigoCategoria}
+                  onChange={handleCategoriaChange}
+                >
+                  <option value="">Seleccione una categoría</option>
+                  {categorias.map((categoria) => (
+                    <option key={categoria.codigo} value={categoria.codigo}>
+                      {categoria.denominacion}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <button className="btn btn-primary" onClick={save}>
+                  Guardar
+                </button>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">{txtValidacion}</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

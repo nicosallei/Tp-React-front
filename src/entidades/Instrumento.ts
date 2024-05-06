@@ -1,3 +1,5 @@
+import Categoria from "./Categoria";
+
 export default class Instrumento {
   id: number = 0;
   instrumento: string = "";
@@ -8,4 +10,5 @@ export default class Instrumento {
   costoEnvio: string = "";
   cantidadVendida: number = 0;
   descripcion: string = "";
+  categoria?: Categoria;
 }
