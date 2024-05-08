@@ -57,8 +57,8 @@
 }
 .mi-clase-personalizada {
   box-sizing: border-box;
-  padding-right: calc(100vw - 50vw);
-  width: 90vw; /* Ajusta este valor a la cantidad de padding que necesites */
+  padding-right: calc(85vw - 50vw);
+  width: 100%; /* Ajusta este valor a la cantidad de padding que necesites */
   direction: ltr;
 }
 .mi-contenido {

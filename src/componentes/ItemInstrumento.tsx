@@ -78,7 +78,7 @@ function ItemInstrumento(arg: InstrumentoParams) {
             />
           </div>
           <div className="col-md-8">
-            <div className="card-body mi-contenido">
+            <div className="card-body ">
               <h5 className="card-title">{arg.instrumento}</h5>
               <p className="card-text">Precio: ${arg.precio}</p>
               <p className="card-text">{renderCostoEnvio()}</p>
