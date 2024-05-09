@@ -39,7 +39,7 @@ function Menu() {
                   cantidadVendida={instrumento.cantidadVendida}
                   costoEnvio={instrumento.costoEnvio}
                   initialHayStock={true}
-                />
+                ></ItemInstrumento>
               ))}
             </div>
             <div
@@ -53,7 +53,7 @@ function Menu() {
               }}
             >
               <b>Carrito Compras</b>
-              <Carrito />
+              <Carrito></Carrito>
             </div>
           </div>
         </CarritoContextProvider>

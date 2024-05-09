@@ -1,35 +1,62 @@
-import Instrumento from "../entidades/Instrumento";
+import Pedido from "../entidades/Pedido";
+import PedidoDetalle from "../entidades/PedidoDetalle";
 import { useCarrito } from "../hooks/useCarrito";
+import { realizarPedido } from "../servicios/FuncionesApi";
 
-function CartItem(item: Instrumento) {
+function CartItem({ item }: { item: PedidoDetalle }) {
   return (
     <div key={item.id}>
-      <span>
+      <span key={item.instrumento?.id}>
         <img
           width={50}
           height={50}
-          src={`./images/${item.imagen}`}
-          alt={item.instrumento}
+          src={`./images/${item.instrumento?.imagen}`}
+          alt={item.instrumento?.instrumento}
         />
         <div>
-          <strong>{item.instrumento}</strong> - ${item.precio}
+          <strong>{item.instrumento?.instrumento}</strong> - $
+          {item.instrumento?.precio}
         </div>
         <div>
           <b>
-            {item.cantidad} {item.cantidad == 1 ? "unidad" : "unidades"}{" "}
+            {item.cantidad} {item.cantidad === 1 ? "unidad" : "unidades"}
           </b>
         </div>
+        <div>
+          <b>Subtotal: ${item.cantidad * (item.instrumento?.precio || 0)}</b>
+        </div>
       </span>
-      <hr></hr>
+      <hr />
     </div>
   );
 }
 
 export function Carrito() {
-  const { cart, removeCarrito, addCarrito, limpiarCarrito } = useCarrito();
-  const mostrarCarritoJSON = () => {
-    console.log(cart);
+  const { cart, limpiarCarrito } = useCarrito();
+
+  const total = cart.reduce((sum, detalle) => {
+    return sum + detalle.cantidad * (detalle.instrumento?.precio || 0);
+  }, 0);
+
+  const comprar = async () => {
+    try {
+      const pedido = new Pedido();
+      pedido.pedidoDetalle = cart;
+      // Aquí puedes agregar más propiedades al pedido si es necesario
+
+      const data = await realizarPedido(pedido);
+      console.log(data);
+      // Aquí puedes manejar la respuesta del servidor después de realizar el pedido
+
+      // Limpia el carrito y muestra un mensaje de éxito
+      limpiarCarrito();
+      alert("La compra se ha realizado con éxito");
+    } catch (error) {
+      console.error(error);
+      // Aquí puedes manejar los errores que puedan ocurrir al realizar el pedido
+    }
   };
+
   return (
     <>
       <div
@@ -47,25 +74,13 @@ export function Carrito() {
 
         <aside className="cart">
           <ul>
-            {cart.map((instrumento: Instrumento, index) => (
-              <CartItem
-                id={instrumento.id}
-                instrumento={instrumento.instrumento}
-                precio={instrumento.precio}
-                key={index}
-                imagen={instrumento.imagen}
-                descripcion={instrumento.descripcion}
-                categoria={instrumento.categoria}
-                cantidad={instrumento.cantidad}
-                marca={instrumento.marca}
-                modelo={instrumento.modelo}
-                costoEnvio={instrumento.costoEnvio}
-                cantidadVendida={instrumento.cantidadVendida}
-                addCarrito={() => addCarrito(instrumento)}
-              />
-            ))}
+            {cart.map((detalle: PedidoDetalle, index) => {
+              return <CartItem key={index} item={detalle} />;
+            })}
           </ul>
-
+          <div>
+            <b>Total: ${total}</b>
+          </div>
           <button onClick={limpiarCarrito} title="Limpiar Todo">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +101,7 @@ export function Carrito() {
               <path d="M3 3l18 18" />
             </svg>
           </button>
-          <button onClick={mostrarCarritoJSON}>MOSTRAR CART JSON</button>
+          <button onClick={comprar}>COMPRAR</button>
         </aside>
       </div>
     </>

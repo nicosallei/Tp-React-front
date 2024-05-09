@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import "../componentes/css/ItemInstrumento.css";
 import Categoria from "../entidades/Categoria";
 import Instrumento from "../entidades/Instrumento";
@@ -23,37 +23,27 @@ type InstrumentoParams = {
 };
 
 function ItemInstrumento(arg: InstrumentoParams) {
-  const [contador, incrementarCantidad] = useState(0);
-  const text = arg.initialHayStock ? "Comprar" : "Sin Stock";
-  const buttonClassName = arg.initialHayStock
-    ? "btn btn-primary"
-    : "btn btn-primary buttonSinStock";
-  const handleClick = () => {
-    arg.initialHayStock ? incrementarCantidad((contador) => contador + 1) : 0;
-  };
-  //
   const { addCarrito, removeCarrito, cart, removeItemCarrito } = useCarrito();
 
-  const verificaPlatoEnCarrito = (product: Instrumento) => {
-    return cart.some((item) => item.id === product.id);
-  };
-
-  const isPlatoInCarrito = verificaPlatoEnCarrito(arg.instrumentoObject);
-
-  //const text = arg.costoEnvio === "G" ? "Envio gratis a todo el pais": `Costo de Envio interior de Argentina $${arg.costoEnvio}`;
+  const isPlatoInCarrito = useMemo(() => {
+    for (let detalle of cart) {
+      if (detalle.instrumento?.id === arg.instrumentoObject.id) {
+        return true;
+      }
+    }
+    return false;
+  }, [cart, arg.instrumentoObject.id]);
 
   const renderCostoEnvio = () => {
     if (arg.costoEnvio === "G") {
       return (
         <span style={{ color: "green" }}>
           <i className="fas fa-car" style={{ opacity: 0.5 }}></i>{" "}
-          {/* Add the vehicle icon here */}
           <img
             src={"/images/camion.png"}
             alt="Descripción de la imagen"
             style={{ width: "20px", height: "20px" }}
           />{" "}
-          {/* Add the image here */}
           Envio gratis a todo el pais
         </span>
       );

@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useState } from "react";
 import Instrumento from "../entidades/Instrumento";
+import PedidoDetalle from "../entidades/PedidoDetalle";
 
 interface CartContextType {
-  cart: Instrumento[];
+  cart: PedidoDetalle[];
   addCarrito: (product: Instrumento) => void;
   removeCarrito: (product: Instrumento) => void;
   removeItemCarrito: (product: Instrumento) => void;
@@ -18,62 +19,55 @@ export const CarContext = createContext<CartContextType>({
 });
 
 export function CarritoContextProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<Instrumento[]>([]);
+  const [cart, setCart] = useState<PedidoDetalle[]>([]);
 
   const addCarrito = async (product: Instrumento) => {
-    let existe: boolean = false;
-    cart.forEach(async (element: Instrumento) => {
-      if (element.id === product.id) {
-        existe = true;
-        return existe;
-      }
-    });
+    let cartCopy = [...cart];
+    let detalleExistente = cartCopy.find(
+      (detalle) => detalle.instrumento?.id === product.id
+    );
 
-    if (existe) {
+    if (detalleExistente) {
       console.log("YA EXISTE");
-      product.cantidad += 1;
-      const cartClonado = await structuredClone(
-        cart.filter((item) => item.id !== product.id)
-      );
-      await cartClonado.push(product);
-      setCart(cartClonado);
+      detalleExistente.cantidad += 1;
     } else {
-      // si el producto no esta en el carrito
       console.log("NO EXISTE");
-      await setCart((prevCart) => [...prevCart, product]);
+      const nuevoDetalle = new PedidoDetalle();
+      nuevoDetalle.instrumento = product;
+      nuevoDetalle.cantidad = 1;
+      cartCopy.push(nuevoDetalle);
     }
+
+    setCart(cartCopy);
   };
 
   const removeCarrito = async (product: Instrumento) => {
-    await setCart((prevCart) =>
-      prevCart.filter((item) => item.id !== product.id)
+    setCart((prevCart) =>
+      prevCart.filter((detalle) => detalle.instrumento?.id !== product.id)
     );
   };
 
   const removeItemCarrito = async (product: Instrumento) => {
-    let existe: boolean = false;
-    cart.forEach(async (element: Instrumento) => {
-      if (element.id === product.id) {
-        existe = true;
-      }
-    });
+    let cartCopy = [...cart];
+    let detalleExistente = cartCopy.find(
+      (detalle) => detalle.instrumento?.id === product.id
+    );
 
-    if (existe) {
+    if (detalleExistente) {
       console.log("EXISTE");
-      if (product.cantidad > 1) {
-        product.cantidad -= 1;
-        const cartClonado = await structuredClone(
-          cart.filter((item) => item.id !== product.id)
-        );
-        await cartClonado.push(product);
-        setCart(cartClonado);
+      if (detalleExistente.cantidad > 1) {
+        detalleExistente.cantidad -= 1;
       } else {
-        await setCart((prevCart) =>
-          prevCart.filter((item) => item.id !== product.id)
+        // Eliminar el detalle del carrito si la cantidad es 1
+        cartCopy = cartCopy.filter(
+          (detalle) => detalle.instrumento?.id !== product.id
         );
       }
     }
+
+    setCart(cartCopy);
   };
+
   const limpiarCarrito = () => {
     setCart([]);
   };
