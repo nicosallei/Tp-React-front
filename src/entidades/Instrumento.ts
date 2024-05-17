@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from "react";
 import Categoria from "./Categoria";
 
 export default class Instrumento {
@@ -11,4 +12,6 @@ export default class Instrumento {
   cantidadVendida: number = 0;
   descripcion: string = "";
   categoria?: Categoria;
+  cantidad: number = 1;
+  addCarrito?: ChangeEventHandler;
 }
