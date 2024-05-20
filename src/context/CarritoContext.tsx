@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import Instrumento from "../entidades/Instrumento";
 import PedidoDetalle from "../entidades/PedidoDetalle";
+import Pedido from "../entidades/Pedido";
 
 interface CartContextType {
   cart: PedidoDetalle[];
@@ -8,6 +9,7 @@ interface CartContextType {
   removeCarrito: (product: Instrumento) => void;
   removeItemCarrito: (product: Instrumento) => void;
   limpiarCarrito: () => void;
+  totalPedido?: number;
 }
 
 export const CarContext = createContext<CartContextType>({
@@ -16,10 +18,12 @@ export const CarContext = createContext<CartContextType>({
   removeCarrito: () => {},
   removeItemCarrito: () => {},
   limpiarCarrito: () => {},
+  totalPedido: 0,
 });
 
 export function CarritoContextProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<PedidoDetalle[]>([]);
+  const [totalPedido, setTotalPedido] = useState<number>(0);
 
   const addCarrito = async (product: Instrumento) => {
     let cartCopy = [...cart];
@@ -37,7 +41,7 @@ export function CarritoContextProvider({ children }: { children: ReactNode }) {
       nuevoDetalle.cantidad = 1;
       cartCopy.push(nuevoDetalle);
     }
-
+    calcularTotalCarrito();
     setCart(cartCopy);
   };
 
@@ -64,12 +68,20 @@ export function CarritoContextProvider({ children }: { children: ReactNode }) {
         );
       }
     }
-
+    calcularTotalCarrito();
     setCart(cartCopy);
   };
 
   const limpiarCarrito = () => {
     setCart([]);
+  };
+
+  const calcularTotalCarrito = async () => {
+    let total: number = 0;
+    cart.forEach(async (element: PedidoDetalle) => {
+      total += element.cantidad * (element.instrumento?.precio || 0);
+    });
+    await setTotalPedido(total);
   };
 
   return (
@@ -80,6 +92,7 @@ export function CarritoContextProvider({ children }: { children: ReactNode }) {
         limpiarCarrito,
         removeCarrito,
         removeItemCarrito,
+        totalPedido,
       }}
     >
       {children}
