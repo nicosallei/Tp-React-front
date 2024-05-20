@@ -9,9 +9,13 @@ import DondeEstamos from "./DondeEstamos.tsx";
 import GrillaInstrumento from "./componentes/GrillaInstrumento.tsx";
 import Formulario from "./componentes/Formulario.tsx";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route index element={<Producto />} />
         <Route path="/menu" element={<Producto />} />
