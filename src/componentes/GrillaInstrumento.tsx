@@ -5,9 +5,16 @@ import {
   getInstrumentoJSONFetch,
 } from "../servicios/FuncionesApi";
 import MenuOpciones from "./MenuOpciones";
+import Usuario from "../entidades/Usuario";
+import { Roles } from "../entidades/Roles";
 
 function GrillaInstrumento() {
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
+
+  const [jsonUsuario, setJSONUsuario] = useState<any>(
+    localStorage.getItem("usuario")
+  );
+  const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
 
   const getInstrumentos = async () => {
     const datos: Instrumento[] = await getInstrumentoJSONFetch();
@@ -53,9 +60,13 @@ function GrillaInstrumento() {
             <div className="col-1 border-end">
               <b>Modificar</b>
             </div>
-            <div className="col-1 border-end">
-              <b>Eliminar</b>
-            </div>
+            {usuarioLogueado.rol == Roles.ADMIN ? (
+              <div className="col-1 border-end">
+                <b>Eliminar</b>
+              </div>
+            ) : (
+              <div className="col-1 border-end"></div>
+            )}
           </div>
           {instrumentos.map((instrumento: Instrumento) => (
             <div className="row border" key={instrumento.id}>
@@ -79,15 +90,19 @@ function GrillaInstrumento() {
                   Modificar
                 </a>
               </div>
-              <div className="col-1 border-end">
-                <a
-                  className="btn btn-danger"
-                  style={{ marginBottom: 10 }}
-                  onClick={(e) => deleteInstrumento(instrumento.id)}
-                >
-                  Eliminar
-                </a>
-              </div>
+              {usuarioLogueado.rol == Roles.ADMIN ? (
+                <div className="col-1 border-end">
+                  <a
+                    className="btn btn-danger"
+                    style={{ marginBottom: 10 }}
+                    onClick={(e) => deleteInstrumento(instrumento.id)}
+                  >
+                    Eliminar
+                  </a>
+                </div>
+              ) : (
+                <div className="col-1 border-end"></div>
+              )}
             </div>
           ))}
         </div>
