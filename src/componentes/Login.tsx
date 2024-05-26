@@ -16,12 +16,17 @@ function Login() {
 
   useEffect(() => {
     if (usuario?.rol) {
-      localStorage.setItem("usuario", JSON.stringify(usuario));
+      const usuarioParaAlmacenar = {
+        usuario: usuario.usuario,
+        rol: usuario.rol,
+      };
+
+      localStorage.setItem("usuario", JSON.stringify(usuarioParaAlmacenar));
       navigate("/menu", {
         replace: true,
         state: {
           logged: true,
-          usuario: usuario,
+          usuario: usuarioParaAlmacenar,
         },
       });
     }
@@ -41,7 +46,7 @@ function Login() {
     }
 
     // Llamada al backend
-    //const encryptedPassword = CryptoJS.SHA256(usuario.clave).toString();
+    const encryptedPassword = CryptoJS.SHA256(usuario.clave).toString();
 
     const response = await fetch("http://localhost:8080/api/usuarios/login", {
       method: "POST",
@@ -50,18 +55,21 @@ function Login() {
       },
       body: JSON.stringify({
         username: usuario.usuario,
-        password: usuario.clave,
+        password: encryptedPassword,
       }),
     });
 
     if (response.ok) {
       const data = await response.json();
       const newUsuario = {
-        ...usuario,
         usuario: data.username,
         rol: data.role,
       };
-      setUsuario(newUsuario);
+      // Crear un nuevo objeto Usuario y asignarle las propiedades de newUsuario
+      const usuarioActualizado = new Usuario();
+      usuarioActualizado.usuario = newUsuario.usuario;
+      usuarioActualizado.rol = newUsuario.rol;
+      setUsuario(usuarioActualizado);
       localStorage.setItem("usuario", JSON.stringify(newUsuario));
       navigate("/menu", {
         replace: true,

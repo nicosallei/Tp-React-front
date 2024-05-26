@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as CryptoJS from "crypto-js";
 
 interface Usuario {
   nombre: string;
@@ -56,6 +57,8 @@ const Registro = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    const encryptedPassword = CryptoJS.SHA256(usuario.clave).toString();
+
     const response = await fetch(
       "http://localhost:8080/api/usuarios/registro",
       {
@@ -65,7 +68,7 @@ const Registro = () => {
         },
         body: JSON.stringify({
           username: usuario.nombre,
-          password: usuario.clave,
+          password: encryptedPassword,
           role: usuario.rol,
         }),
       }
