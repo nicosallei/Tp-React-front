@@ -12,6 +12,7 @@ import LoaderPage from "./componentes/LoaderPage.tsx";
 import { Roles } from "./entidades/Roles.ts";
 import RolUsuario from "./controlAcceso/RolUsuario.tsx";
 import Login from "./componentes/Login.tsx";
+import Registro from "./componentes/CrearUsuario.tsx";
 //lazy -> técnica de carga diferida, el componente se carga cuando se necesita y NO desde el inicio
 //ayudar a reducir el tiempo de carga inicial de la aplicación y a mejorar la velocidad de navegación
 
@@ -38,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </RutaPrivada>
             }
           />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/home" element={<Home />} />
           <Route path="/DondeEstamos" element={<DondeEstamos />} />
           <Route path="/detalle">
