@@ -161,3 +161,15 @@ export async function traerPedido(codigo: number) {
   });
   return (await response.json()) as Pedido;
 }
+
+export async function getPedidosPorMesAnio() {
+  const response = await fetch("http://localhost:8080/Pedido/filtro-mes-anio");
+  return await response.json();
+}
+
+export async function getPedidosPorInstrumento() {
+  const response = await fetch(
+    "http://localhost:8080/Pedido/filtro-instrumento"
+  );
+  return await response.json();
+}

@@ -50,12 +50,19 @@ function MenuOpciones() {
               </a>
             )}
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/graficos">
+              Gráficos
+            </a>
+          </li>
+
           <li>
             <a className="nav-link">
               Usuario: {usuarioLogueado?.usuario} -{" "}
               {usuarioLogueado?.rol == Roles.ADMIN ? "Admin" : "Común"}
             </a>
           </li>
+
           <li className="nav-item">
             <button
               onClick={cerrarSesion}

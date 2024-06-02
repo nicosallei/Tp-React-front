@@ -21,6 +21,7 @@ const GrillaInstrumento = lazy(() => import("./componentes/GrillaInstrumento"));
 const CheckoutMP = lazy(() => import("./componentes/CheckoutMP"));
 const Formulario = lazy(() => import("./componentes/Formulario"));
 const TestLoad = lazy(() => import("./componentes/TestLoad"));
+const Graficos = lazy(() => import("./componentes/ChartsGoogle.tsx"));
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -45,6 +46,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/detalle">
             <Route path=":idInstrumento" element={<DetalleInstrumento />} />
           </Route>
+
           <Route
             path="/grilla"
             element={
@@ -62,6 +64,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 <RolUsuario rol={Roles.ADMIN}>
                   <Formulario />
                 </RolUsuario>
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/graficos"
+            element={
+              <RutaPrivada>
+                <Graficos />
               </RutaPrivada>
             }
           />
