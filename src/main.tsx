@@ -55,9 +55,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </RutaPrivada>
             }
           />
-          <Route element={<RolUsuario rol={Roles.ADMIN} />}>
-            <Route path="/formulario/:idInstrumento" element={<Formulario />} />
-          </Route>
+          <Route
+            path="/formulario/:idInstrumento"
+            element={
+              <RutaPrivada>
+                <RolUsuario rol={Roles.ADMIN}>
+                  <Formulario />
+                </RolUsuario>
+              </RutaPrivada>
+            }
+          />
           <Route path="/loading" element={<TestLoad />} />
           <Route path="*" element={<Producto />} />
         </Routes>

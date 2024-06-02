@@ -7,10 +7,11 @@ import {
 import MenuOpciones from "./MenuOpciones";
 import Usuario from "../entidades/Usuario";
 import { Roles } from "../entidades/Roles";
+import { useNavigate } from "react-router-dom";
 
 function GrillaInstrumento() {
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
-
+  const navigate = useNavigate();
   const [jsonUsuario, setJSONUsuario] = useState<any>(
     localStorage.getItem("usuario")
   );
@@ -85,7 +86,7 @@ function GrillaInstrumento() {
                 <a
                   className="btn btn-info"
                   style={{ marginBottom: 10 }}
-                  href={`/formulario/` + instrumento.id}
+                  onClick={() => navigate(`/formulario/` + instrumento.id)}
                 >
                   Modificar
                 </a>
