@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import "../componentes/css/ItemInstrumento.css";
 import Categoria from "../entidades/Categoria";
 import Instrumento from "../entidades/Instrumento";
@@ -7,6 +7,7 @@ import addCart from "../assets/img/addCart.png";
 import deleteCart from "../assets/img/deleteCart.png";
 import pdfIcon from "../assets/img/pdf.png";
 import { descargarPdf } from "../servicios/FuncionesApi";
+import DetalleInstrumento from "./DetalleInstrumento";
 
 type InstrumentoParams = {
   id: number;
@@ -26,6 +27,7 @@ type InstrumentoParams = {
 
 function ItemInstrumento(arg: InstrumentoParams) {
   const { addCarrito, removeCarrito, cart, removeItemCarrito } = useCarrito();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const isPlatoInCarrito = useMemo(() => {
     for (let detalle of cart) {
@@ -43,7 +45,13 @@ function ItemInstrumento(arg: InstrumentoParams) {
       console.error("Error al descargar el PDF:", error);
     }
   };
-
+  // Función para abrir el modal
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   const renderCostoEnvio = () => {
     if (arg.costoEnvio === "G") {
       return (
@@ -81,15 +89,15 @@ function ItemInstrumento(arg: InstrumentoParams) {
             top: "30px", // Esto posiciona la imagen en la parte superior de la tarjeta
           }}
         />
-        <div className="row g-0 mi-clase-personalizada">
-          <div className="col-md-4 card-body mi-imagen">
+        <div className="row g-0 ">
+          <div className="col-md-3 ">
             <img
               src={`./images/${arg.imagen}`}
               className="card-img"
               alt={arg.imagen}
             />
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <div className="card-body ">
               <h5 className="card-title">{arg.instrumento}</h5>
               <p className="card-text">Precio: ${arg.precio}</p>
@@ -97,7 +105,14 @@ function ItemInstrumento(arg: InstrumentoParams) {
 
               <p className="card-text">vendidos: {arg.cantidadVendida}</p>
               <a href={`detalle/${arg.id}`}>
-                <button type="button" className="btn btn-warning">
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={(event) => {
+                    event.preventDefault(); // Previene la navegación
+                    openModal();
+                  }}
+                >
                   Detalle
                 </button>
               </a>
@@ -134,6 +149,12 @@ function ItemInstrumento(arg: InstrumentoParams) {
           </div>
         </div>
       </div>
+      <DetalleInstrumento
+        isOpen={modalIsOpen}
+        openModal={openModal}
+        closeModal={closeModal} // Pasamos la función closeModal como prop
+        instrumento={arg.instrumentoObject}
+      />
     </>
   );
 }

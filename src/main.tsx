@@ -56,16 +56,16 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </RutaPrivada>
             }
           />
-          <Route path="/detalle">
+          {/* <Route path="/detalle">
             <Route
               path=":idInstrumento"
               element={
                 <RutaPrivada>
-                  <DetalleInstrumento />
+                  <DetalleInstrumento isOpen={true} />
                 </RutaPrivada>
               }
             />
-          </Route>
+          </Route> */}
 
           <Route
             path="/grilla"

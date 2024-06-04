@@ -1,44 +1,44 @@
 import { useState, useEffect } from "react";
-import instrumentos from "../entidades/Instrumento";
-import { useParams } from "react-router-dom";
 import Instrumento from "../entidades/Instrumento";
-import { getInstrumentoXIdFetch } from "../servicios/FuncionesApi";
 import "../componentes/css/ItemInstrumento.css";
-import MenuOpciones from "./MenuOpciones";
+import { Modal } from "antd";
 
-function DetalleInstrumento() {
-  const { idInstrumento } = useParams();
-  const [instrumento, setInstrumento] = useState<instrumentos>();
-  const getInstrumento = async () => {
-    const intrumentoSelect: Instrumento = await getInstrumentoXIdFetch(
-      Number(idInstrumento)
-    );
-    setInstrumento(intrumentoSelect);
-  };
+type DetalleInstrumentoProps = {
+  isOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  instrumento: Instrumento;
+  modalStyle?: React.CSSProperties;
+};
+
+function DetalleInstrumento({
+  isOpen,
+  closeModal,
+  instrumento,
+}: DetalleInstrumentoProps) {
+  const [instrumentoData, setInstrumento] = useState<Instrumento>(instrumento);
 
   useEffect(() => {
-    getInstrumento();
-  }, []);
+    setInstrumento(instrumento);
+  }, [instrumento]);
 
   function renderCostoEnvio() {
-    if (instrumento?.costoEnvio === "G") {
+    if (instrumentoData?.costoEnvio === "G") {
       return (
         <span style={{ color: "green" }}>
           <i className="fas fa-car" style={{ opacity: 0.5 }}></i>{" "}
-          {/* Add the vehicle icon here */}
           <img
             src={"/images/camion.png"}
             alt="Descripción de la imagen"
             style={{ width: "20px", height: "20px" }}
           />{" "}
-          {/* Add the image here */}
           Envio gratis
         </span>
       );
     } else {
       return (
         <span style={{ color: "orange" }}>
-          Costo de envio interior de Argentina: ${instrumento?.costoEnvio}
+          Costo de envio interior de Argentina: ${instrumentoData?.costoEnvio}
         </span>
       );
     }
@@ -46,63 +46,98 @@ function DetalleInstrumento() {
 
   return (
     <>
-      <div className="container-fluid text-center">
-        <MenuOpciones></MenuOpciones>
-        <div className="card mb-3">
+      <Modal
+        visible={isOpen}
+        onCancel={closeModal}
+        width="85%"
+        centered
+        bodyStyle={{
+          height: "85%",
+          margin: "auto",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "0",
+        }}
+        footer={null}
+      >
+        <div
+          className="container-fluid text-start fs-5 fs-md-2"
+          style={{ fontSize: "1rem" }}
+        >
           <div className="row g-0">
             <div className="col-md-6 card-body">
               <img
-                src={"/images/" + instrumento?.imagen}
-                className="card-img-top img-altura"
-                alt={instrumento?.imagen}
+                src={"/images/" + instrumentoData?.imagen}
+                className="card-img-top img-fluid"
+                alt={instrumentoData?.imagen}
               />
-              <h6>Descripción</h6>
-              <p className="card-text">{instrumento?.descripcion}</p>
             </div>
             <div
-              className="col-md-6"
+              className="col-md-6 text-start"
               style={{ borderLeft: "1px solid rgba(0,0,0,0.1)" }}
             >
               <div className="card-body">
-                <p className="card-text">
-                  {instrumento?.cantidadVendida} vendidos
-                </p>
                 <h6 className="card-title instrumento-title">
-                  <strong>{instrumento?.instrumento}</strong>
+                  <strong>{instrumentoData?.instrumento}</strong>
                 </h6>
                 <p className="card-text precio-text">
-                  <strong>${instrumento?.precio}</strong>
+                  <strong>${instrumentoData?.precio}</strong>
                 </p>
-                <div className="marca-modelo">
+
+                <div className="marca-modelo mb-0">
                   <p className="card-text">
-                    <strong>Marca: {instrumento?.marca}</strong>
+                    <strong>Marca: {instrumentoData?.marca}</strong>
                   </p>
                   <p className="card-text">
-                    <strong>Modelo: {instrumento?.modelo}</strong>
+                    <strong>Modelo: {instrumentoData?.modelo}</strong>
                   </p>
                 </div>
 
-                <h6 className="costo-envio">
+                <h6 className="costo-envio mt-1">
                   <strong>Costo Envio:</strong>
                 </h6>
                 <p className="card-text">{renderCostoEnvio()}</p>
 
-                <a href="#" className="btn btn-primary btn-mercado-libre">
+                <a
+                  href="#"
+                  className="btn btn-primary btn-mercado-libre"
+                  style={{
+                    fontSize: "0.8rem",
+                    width: "30%",
+                    padding: "0.5em 0",
+                  }} // Ajustar el tamaño de la fuente y el ancho
+                >
                   Agregar al carrito
                 </a>
               </div>
               <div className="card-footer text-body-secondary">
-                <a href="/menu">
-                  <button type="button" className="btn btn-success">
+                {/* <a href="/menu">
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    style={{
+                      fontSize: "0.8rem",
+                      width: "30%",
+                      padding: "0.5em 0",
+                    }} // Ajustar el tamaño de la fuente y el ancho
+                  >
                     Volver
                   </button>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
+          <div className="row g-0">
+            <div className="col-12 card-body text-start fs-6 fs-md-2">
+              <h6>Descripción</h6>
+              <p className="card-text">{instrumentoData?.descripcion}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </>
   );
 }
+
 export default DetalleInstrumento;
