@@ -16,7 +16,7 @@ function CartItem({ item }: { item: PedidoDetalle }) {
         <img
           width={50}
           height={50}
-          src={`./images/${item.instrumento?.imagen}`}
+          src={`http://localhost:8080/images/${item.instrumento?.imagen}`}
           alt={item.instrumento?.instrumento}
         />
         <div>
