@@ -25,7 +25,7 @@ function DetalleInstrumento({
   function renderCostoEnvio() {
     if (instrumentoData?.costoEnvio === "G") {
       return (
-        <span style={{ color: "green" }}>
+        <span style={{ color: "green" }} className="responsive-text">
           <i className="fas fa-car" style={{ opacity: 0.5 }}></i>{" "}
           <img
             src={"/images/camion.png"}
@@ -37,7 +37,7 @@ function DetalleInstrumento({
       );
     } else {
       return (
-        <span style={{ color: "orange" }}>
+        <span style={{ color: "orange" }} className="responsive-text">
           Costo de envio interior de Argentina: ${instrumentoData?.costoEnvio}
         </span>
       );
@@ -61,10 +61,7 @@ function DetalleInstrumento({
         }}
         footer={null}
       >
-        <div
-          className="container-fluid text-start fs-5 fs-md-2"
-          style={{ fontSize: "1rem" }}
-        >
+        <div className="container-fluid text-start fs-5 fs-md-2 responsive-text">
           <div className="row g-0">
             <div className="col-md-6 card-body">
               <img
@@ -78,30 +75,32 @@ function DetalleInstrumento({
               style={{ borderLeft: "1px solid rgba(0,0,0,0.1)" }}
             >
               <div className="card-body">
-                <h6 className="card-title instrumento-title">
+                <h6 className="card-title instrumento-title responsive-text">
                   <strong>{instrumentoData?.instrumento}</strong>
                 </h6>
-                <p className="card-text precio-text">
+                <p className="card-text precio-text responsive-text">
                   <strong>${instrumentoData?.precio}</strong>
                 </p>
 
                 <div className="marca-modelo mb-0">
-                  <p className="card-text">
+                  <p className="card-text responsive-text">
                     <strong>Marca: {instrumentoData?.marca}</strong>
                   </p>
-                  <p className="card-text">
+                  <p className="card-text responsive-text">
                     <strong>Modelo: {instrumentoData?.modelo}</strong>
                   </p>
                 </div>
 
-                <h6 className="costo-envio mt-1">
+                <h6 className="costo-envio mt-1 responsive-text">
                   <strong>Costo Envio:</strong>
                 </h6>
-                <p className="card-text">{renderCostoEnvio()}</p>
+                <p className="card-text responsive-text">
+                  {renderCostoEnvio()}
+                </p>
 
                 <a
                   href="#"
-                  className="btn btn-primary btn-mercado-libre"
+                  className="btn btn-primary btn-mercado-libre responsive-text"
                   style={{
                     fontSize: "0.8rem",
                     width: "30%",
@@ -130,8 +129,10 @@ function DetalleInstrumento({
           </div>
           <div className="row g-0">
             <div className="col-12 card-body text-start fs-6 fs-md-2">
-              <h6>Descripción</h6>
-              <p className="card-text">{instrumentoData?.descripcion}</p>
+              <h6 className="responsive-text">Descripción</h6>
+              <p className="card-text responsive-text">
+                {instrumentoData?.descripcion}
+              </p>
             </div>
           </div>
         </div>
