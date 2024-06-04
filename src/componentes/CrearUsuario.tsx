@@ -1,6 +1,7 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as CryptoJS from "crypto-js";
+import "./css/crearUsuario.css";
 
 interface Usuario {
   nombre: string;
@@ -81,7 +82,7 @@ const Registro = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="formulario">
       <label>
         Nombre de usuario:
         <input type="text" name="nombre" onChange={handleChange} />

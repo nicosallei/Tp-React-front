@@ -48,37 +48,41 @@ const ChartsGoogle = () => {
   }, []);
 
   return (
-    <div>
-      <MenuOpciones></MenuOpciones>
-      <Chart
-        width={"500px"}
-        height={"300px"}
-        chartType="Bar"
-        loader={<div>Loading Chart</div>}
-        data={barChartData}
-        options={{
-          title: "Cantidad de pedidos por mes",
-          chartArea: { width: "50%" },
-          hAxis: {
-            title: "Total de pedidos",
-            minValue: 0,
-          },
-          vAxis: {
-            title: "Mes",
-          },
-        }}
-      />
-      <Chart
-        width={"500px"}
-        height={"300px"}
-        chartType="PieChart"
-        loader={<div>Loading Chart</div>}
-        data={pieChartData}
-        options={{
-          title: "Pedidos por instrumento",
-        }}
-      />
-    </div>
+    <>
+      <div className="container-fluid text-center">
+        <MenuOpciones></MenuOpciones>
+        <div>
+          <Chart
+            width={"500px"}
+            height={"300px"}
+            chartType="Bar"
+            loader={<div>Loading Chart</div>}
+            data={barChartData}
+            options={{
+              title: "Cantidad de pedidos por mes",
+              chartArea: { width: "50%" },
+              hAxis: {
+                title: "Total de pedidos",
+                minValue: 0,
+              },
+              vAxis: {
+                title: "Mes",
+              },
+            }}
+          />
+          <Chart
+            width={"500px"}
+            height={"300px"}
+            chartType="PieChart"
+            loader={<div>Loading Chart</div>}
+            data={pieChartData}
+            options={{
+              title: "Pedidos por instrumento",
+            }}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 

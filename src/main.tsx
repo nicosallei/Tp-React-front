@@ -30,7 +30,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ToastContainer />
 
         <Routes>
-          <Route index element={<Producto />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/menu"
@@ -40,11 +41,32 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </RutaPrivada>
             }
           />
-          <Route path="/registro" element={<Registro />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/DondeEstamos" element={<DondeEstamos />} />
+
+          <Route
+            path="/home"
+            element={
+              <RutaPrivada>
+                <Home />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/DondeEstamos"
+            element={
+              <RutaPrivada>
+                <DondeEstamos />
+              </RutaPrivada>
+            }
+          />
           <Route path="/detalle">
-            <Route path=":idInstrumento" element={<DetalleInstrumento />} />
+            <Route
+              path=":idInstrumento"
+              element={
+                <RutaPrivada>
+                  <DetalleInstrumento />
+                </RutaPrivada>
+              }
+            />
           </Route>
 
           <Route
@@ -71,12 +93,28 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             path="/graficos"
             element={
               <RutaPrivada>
-                <Graficos />
+                <RolUsuario rol={Roles.ADMIN}>
+                  <Graficos />
+                </RolUsuario>
               </RutaPrivada>
             }
           />
-          <Route path="/loading" element={<TestLoad />} />
-          <Route path="*" element={<Producto />} />
+          <Route
+            path="/loading"
+            element={
+              <RutaPrivada>
+                <TestLoad />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <RutaPrivada>
+                <Home />
+              </RutaPrivada>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </Suspense>

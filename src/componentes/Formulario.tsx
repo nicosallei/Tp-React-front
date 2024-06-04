@@ -18,7 +18,7 @@ function Formulario() {
   );
   const [txtValidacion, setTxtValidacion] = useState<string>("");
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const getInstrumento = async () => {
     if (Number(idInstrumento) !== 0) {
       let instrumentoSelect: Instrumento = await getInstrumentoXIdFetch(
@@ -40,47 +40,8 @@ function Formulario() {
   }, []);
 
   const save = async () => {
-    if (
-      instrumento.instrumento === "" ||
-      instrumento.instrumento === undefined
-    ) {
-      setTxtValidacion("El campo nombre es obligatorio");
-      return;
-    }
-    if (instrumento.marca === "" || instrumento.marca === undefined) {
-      setTxtValidacion("El campo marca es obligatorio");
-      return;
-    }
-    if (instrumento.modelo === "" || instrumento.modelo === undefined) {
-      setTxtValidacion("El campo modelo es obligatorio");
-      return;
-    }
-    if (instrumento.imagen === "" || instrumento.imagen === undefined) {
-      setTxtValidacion("El campo imagen es obligatorio");
-      return;
-    }
-    if (instrumento.precio === 0 || instrumento.precio === undefined) {
-      setTxtValidacion("El campo precio es obligatorio");
-      return;
-    }
-    if (instrumento.costoEnvio === "" || instrumento.costoEnvio === undefined) {
-      setTxtValidacion("El campo costo de envio es obligatorio");
-      return;
-    }
-    if (
-      instrumento.cantidadVendida === 0 ||
-      instrumento.cantidadVendida === undefined
-    ) {
-      setTxtValidacion("El campo cantidad vendida es obligatorio");
-      return;
-    }
-    if (
-      instrumento.descripcion === "" ||
-      instrumento.descripcion === undefined
-    ) {
-      setTxtValidacion("El campo descripcion es obligatorio");
-      return;
-    }
+    setFormSubmitted(true);
+
     if (codigoCategoria === 0) {
       setTxtValidacion("El campo categoria es obligatorio");
       return;
@@ -123,7 +84,13 @@ function Formulario() {
                       instrumento: e.target.value,
                     })
                   }
+                  required
                 />
+                {formSubmitted && !instrumento.instrumento && (
+                  <div style={{ color: "red" }}>
+                    El campo nombre es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Marca</label>
@@ -134,7 +101,13 @@ function Formulario() {
                   onChange={(e) =>
                     setInstrumento({ ...instrumento, marca: e.target.value })
                   }
+                  required
                 />
+                {formSubmitted && !instrumento.marca && (
+                  <div style={{ color: "red" }}>
+                    El campo marca es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Modelo</label>
@@ -145,7 +118,13 @@ function Formulario() {
                   onChange={(e) =>
                     setInstrumento({ ...instrumento, modelo: e.target.value })
                   }
+                  required
                 />
+                {formSubmitted && !instrumento.modelo && (
+                  <div style={{ color: "red" }}>
+                    El campo modelo es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Imagen</label>
@@ -156,7 +135,13 @@ function Formulario() {
                   onChange={(e) =>
                     setInstrumento({ ...instrumento, imagen: e.target.value })
                   }
+                  required
                 />
+                {formSubmitted && !instrumento.imagen && (
+                  <div style={{ color: "red" }}>
+                    El campo imagen es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Precio</label>
@@ -164,13 +149,25 @@ function Formulario() {
                   type="number"
                   className="form-control"
                   value={instrumento.precio || ""}
-                  onChange={(e) =>
-                    setInstrumento({
-                      ...instrumento,
-                      precio: Number(e.target.value),
-                    })
-                  }
+                  min="0"
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    if (value >= 0) {
+                      setInstrumento({
+                        ...instrumento,
+                        precio: value,
+                      });
+                    }
+                  }}
+                  required
                 />
+                {formSubmitted &&
+                  (instrumento.precio === undefined ||
+                    instrumento.precio === 0) && (
+                    <div style={{ color: "red" }}>
+                      El campo precio es obligatorio
+                    </div>
+                  )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Costo de envio</label>
@@ -178,13 +175,31 @@ function Formulario() {
                   type="text"
                   className="form-control"
                   value={instrumento.costoEnvio}
-                  onChange={(e) =>
-                    setInstrumento({
-                      ...instrumento,
-                      costoEnvio: e.target.value,
-                    })
-                  }
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (
+                      value === "" ||
+                      value.toUpperCase() === "G" ||
+                      Number(value) >= 0
+                    ) {
+                      setInstrumento({
+                        ...instrumento,
+                        costoEnvio:
+                          value === "0"
+                            ? "G"
+                            : value.toUpperCase() === "G"
+                            ? "G"
+                            : value,
+                      });
+                    }
+                  }}
+                  required
                 />
+                {formSubmitted && !instrumento.costoEnvio && (
+                  <div style={{ color: "red" }}>
+                    El campo Costo de envio es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Cantidad vendida</label>
@@ -192,13 +207,26 @@ function Formulario() {
                   type="number"
                   className="form-control"
                   value={instrumento.cantidadVendida || ""}
-                  onChange={(e) =>
-                    setInstrumento({
-                      ...instrumento,
-                      cantidadVendida: Number(e.target.value),
-                    })
-                  }
+                  min="0"
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    if (value >= 0 || e.target.value === "") {
+                      setInstrumento({
+                        ...instrumento,
+                        cantidadVendida: value,
+                      });
+                    }
+                  }}
+                  required
                 />
+                {formSubmitted &&
+                  (instrumento.cantidadVendida === undefined ||
+                    instrumento.cantidadVendida === null ||
+                    instrumento.cantidadVendida < 0) && (
+                    <div style={{ color: "red" }}>
+                      El campo cantidad vendida es obligatorio
+                    </div>
+                  )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Descripcion</label>
@@ -212,7 +240,13 @@ function Formulario() {
                       descripcion: e.target.value,
                     })
                   }
+                  required
                 />
+                {formSubmitted && !instrumento.descripcion && (
+                  <div style={{ color: "red" }}>
+                    El campo descripcion es obligatorio
+                  </div>
+                )}
               </div>
               <div className="mb-3">
                 <label className="form-label">Categoria</label>

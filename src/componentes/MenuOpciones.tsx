@@ -1,6 +1,6 @@
 import "../App.css";
 import { useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Usuario from "../entidades/Usuario";
 import { Roles } from "../entidades/Roles";
 
@@ -18,9 +18,7 @@ function MenuOpciones() {
     });
   };
 
-  const [jsonUsuario, setJSONUsuario] = useState<any>(
-    localStorage.getItem("usuario")
-  );
+  const [jsonUsuario] = useState<any>(localStorage.getItem("usuario"));
   console.log("JSON " + jsonUsuario);
   const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
 
@@ -51,9 +49,11 @@ function MenuOpciones() {
             )}
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/graficos">
-              Gráficos
-            </a>
+            {usuarioLogueado?.rol === Roles.ADMIN && (
+              <a className="nav-link" href="/graficos">
+                Gráficos
+              </a>
+            )}
           </li>
 
           <li>

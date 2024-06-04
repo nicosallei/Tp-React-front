@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Usuario from "../entidades/Usuario";
 import * as CryptoJS from "crypto-js";
+import "./css/login.css";
 
 function Login() {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario>(new Usuario());
   const [txtValidacion, setTxtValidacion] = useState<string>("");
-  const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -31,9 +31,6 @@ function Login() {
       });
     }
   }, [usuario]);
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
 
   const login = async () => {
     if (usuario?.usuario == undefined || usuario?.usuario === "") {
@@ -86,8 +83,8 @@ function Login() {
 
   return (
     <>
-      <div className="center">
-        <form>
+      <div className="login-form__center">
+        <form className="login-form">
           <div className="mb-3">
             <label htmlFor="txtUsuario" className="form-label">
               Usuario
