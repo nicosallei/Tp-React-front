@@ -202,3 +202,24 @@ export async function descargarPdf(id: number, nombreInstrumento: string) {
   link.click();
   link.remove();
 }
+
+export async function descargarExcel(fechaDesde: string, fechaHasta: string) {
+  const urlServer = `/Excel/download/excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`;
+
+  const response = await fetch(urlServer, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al descargar el archivo Excel");
+  }
+
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "pedidos.xlsx";
+  document.body.appendChild(a); // Necesario para Firefox
+  a.click();
+  a.remove(); // Necesario para Firefox
+}

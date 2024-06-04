@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Producto from "./componentes/Menu.tsx";
-import DetalleInstrumento from "./componentes/DetalleInstrumento.tsx";
+//import DetalleInstrumento from "./componentes/DetalleInstrumento.tsx";
 import Home from "./Home.tsx";
 import DondeEstamos from "./DondeEstamos.tsx";
 import { ToastContainer } from "react-toastify";

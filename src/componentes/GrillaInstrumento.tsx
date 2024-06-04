@@ -8,8 +8,13 @@ import MenuOpciones from "./MenuOpciones";
 import Usuario from "../entidades/Usuario";
 import { Roles } from "../entidades/Roles";
 import ModalFormulario from "../componentes/Formulario";
+import { descargarExcel } from "../servicios/FuncionesApi";
+import ModalExcel from "./ModalExcel";
 
 function GrillaInstrumento() {
+  const [fechaInicio, setFechaInicio] = useState<string>("");
+  const [fechaFin, setFechaFin] = useState<string>("");
+  const [showModalExcel, setShowModalExcel] = useState(false);
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
   const [jsonUsuario] = useState<any>(localStorage.getItem("usuario"));
   const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
@@ -40,14 +45,46 @@ function GrillaInstrumento() {
     setShowModal(false);
     await getInstrumentos(); // Recarga los instrumentos cuando se cierra el modal
   };
+  const handleOpenModalExcel = () => {
+    setShowModalExcel(true);
+  };
+
+  const handleCloseModalExcel = () => {
+    setShowModalExcel(false);
+  };
+  const handleDescargarExcel = async () => {
+    try {
+      // Asegúrate de que las fechas de inicio y fin están establecidas
+      if (!fechaInicio || !fechaFin) {
+        console.error("Las fechas de inicio y fin deben estar establecidas");
+        return;
+      }
+
+      await descargarExcel(fechaInicio, fechaFin);
+      handleCloseModalExcel();
+    } catch (error) {
+      console.error("Error al descargar Excel: ", error);
+    }
+  };
+  useEffect(() => {
+    console.log(showModalExcel); // Ahora imprimirá el valor actualizado
+  }, [showModalExcel]);
 
   return (
     <>
       <div className="container-fluid text-center">
         <MenuOpciones></MenuOpciones>
+
         <div className="container-fluid text-center">
           <br />
           <div className="d-flex justify-content-end mb-3">
+            <button
+              className="btn btn-success me-3"
+              onClick={() => handleOpenModalExcel()}
+            >
+              Descargar Excel
+            </button>
+
             <button
               className="btn btn-primary"
               onClick={() => handleOpenModal()}
@@ -55,6 +92,7 @@ function GrillaInstrumento() {
               Nuevo
             </button>
           </div>
+
           <div className="row border">
             <div className="col-1 border-end">
               <b>ID</b>
@@ -120,14 +158,23 @@ function GrillaInstrumento() {
             </div>
           ))}
         </div>
+        {showModalExcel && (
+          <ModalExcel
+            fechaInicio={fechaInicio}
+            fechaFin={fechaFin}
+            setFechaInicio={setFechaInicio}
+            setFechaFin={setFechaFin}
+            onClose={handleCloseModalExcel}
+            onDescargar={handleDescargarExcel}
+          />
+        )}
       </div>
       {showModal && (
         <ModalFormulario
           initialInstrumento={selectedInstrumento}
           onClose={handleCloseModal}
         />
-      )}{" "}
-      {/* Asegúrate de pasar el instrumento seleccionado y la función de cierre como props al componente de modal */}
+      )}
     </>
   );
 }
