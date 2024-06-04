@@ -81,7 +81,10 @@ export async function getCategoriaDataBaseJson() {
   return await response.json();
 }
 
-export async function saveInstrumento(instrumento?: Instrumento) {
+export async function saveInstrumento(
+  instrumento?: Instrumento,
+  imagen?: File
+) {
   let urlServer = "http://localhost:8080/Instrumento/guardar";
   let method: string = "POST";
   if (instrumento && instrumento.id > 0) {
@@ -89,13 +92,38 @@ export async function saveInstrumento(instrumento?: Instrumento) {
       "http://localhost:8080/Instrumento/actualizar/" + instrumento.id;
     method = "PUT";
   }
-  await fetch(urlServer, {
+
+  const formData = new FormData();
+  // Solo agregamos las propiedades necesarias del instrumento al FormData
+  formData.append(
+    "instrumento",
+    JSON.stringify({
+      id: instrumento?.id,
+      instrumento: instrumento?.instrumento,
+      marca: instrumento?.marca,
+      modelo: instrumento?.modelo,
+      descripcion: instrumento?.descripcion,
+      precio: instrumento?.precio,
+      costoEnvio: instrumento?.costoEnvio,
+      cantidadVendida: instrumento?.cantidadVendida,
+      categoria: instrumento?.categoria,
+    })
+  );
+
+  if (imagen) {
+    formData.append("imagen", imagen);
+  }
+
+  const response = await fetch(urlServer, {
     method: method,
-    body: JSON.stringify(instrumento),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    body: formData,
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
 }
 
 export async function getCategoriaXCodigo(codigo: number) {

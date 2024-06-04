@@ -21,6 +21,7 @@ function ModalFormulario({
 }: ModalFormularioProps) {
   const navigate = useNavigate();
   const [codigoCategoria, setCodigoCategoria] = useState<number>(0);
+  const [imagen, setImagen] = useState<File | null>(null);
 
   const [instrumento, setInstrumento] = useState<Instrumento>(
     initialInstrumento || new Instrumento()
@@ -79,10 +80,7 @@ function ModalFormulario({
       setTxtValidacion("El campo modelo es obligatorio");
       return false;
     }
-    if (!instrumento.imagen) {
-      setTxtValidacion("El campo imagen es obligatorio");
-      return false;
-    }
+
     if (!instrumento.precio) {
       setTxtValidacion("El campo precio es obligatorio");
       return false;
@@ -120,9 +118,26 @@ function ModalFormulario({
       return;
     }
 
-    console.log(instrumento.instrumento);
-    instrumento.id = idInstrumento || 0;
-    await saveInstrumento(instrumento);
+    const formData = new FormData();
+    if (imagen) {
+      formData.append("imagen", imagen);
+    }
+    formData.append("instrumento", JSON.stringify(instrumento));
+
+    // Llama a la función de guardado con la imagen seleccionada
+    let response;
+    if (imagen === null) {
+      response = await saveInstrumento(instrumento);
+    } else {
+      response = await saveInstrumento(instrumento, imagen);
+      // ...
+    }
+
+    if (!response) {
+      // Manejar error
+      return;
+    }
+
     navigate("/grilla");
     handleOk(); // Cierra el modal después de guardar
   };
@@ -153,7 +168,7 @@ function ModalFormulario({
         onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
-        width={1200} // Ajusta el ancho del modal aquí
+        width={1200}
       >
         <div className="container-fluid">
           <div className="container">
@@ -218,20 +233,16 @@ function ModalFormulario({
                 <div className="mb-3">
                   <label className="form-label">Imagen</label>
                   <input
-                    type="text"
+                    type="file"
                     className="form-control"
-                    value={instrumento.imagen}
                     onChange={(e) =>
-                      setInstrumento({ ...instrumento, imagen: e.target.value })
+                      setImagen(e.target.files ? e.target.files[0] : null)
                     }
+                    accept="image/*"
                     required
                   />
-                  {formSubmitted && !instrumento.imagen && (
-                    <div style={{ color: "red" }}>
-                      El campo imagen es obligatorio
-                    </div>
-                  )}
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Precio</label>
                   <input

@@ -92,7 +92,7 @@ function ItemInstrumento(arg: InstrumentoParams) {
         <div className="row g-0 ">
           <div className="col-md-3 ">
             <img
-              src={`./images/${arg.imagen}`}
+              src={`http://localhost:8080/images/${arg.imagen}`}
               className="card-img"
               alt={arg.imagen}
             />

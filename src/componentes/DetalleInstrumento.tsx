@@ -75,7 +75,7 @@ function DetalleInstrumento({
           <div className="row g-0">
             <div className="col-md-6 card-body">
               <img
-                src={"/images/" + instrumentoData?.imagen}
+                src={"http://localhost:8080/images/" + instrumentoData?.imagen}
                 className="card-img-top img-fluid"
                 alt={instrumentoData?.imagen}
               />
