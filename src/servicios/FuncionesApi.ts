@@ -200,7 +200,7 @@ export async function descargarPdf(id: number, nombreInstrumento: string) {
 }
 
 export async function descargarExcel(fechaDesde: string, fechaHasta: string) {
-  const urlServer = `/Excel/download/excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`;
+  const urlServer = `http://localhost:8080/Excel/download/excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`;
 
   const response = await fetch(urlServer, {
     method: "GET",
@@ -214,7 +214,14 @@ export async function descargarExcel(fechaDesde: string, fechaHasta: string) {
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "pedidos.xlsx";
+
+  // Formatear las fechas en el formato dd-mm-yyyy
+  const fechaDesdeFormateada = new Date(fechaDesde).toLocaleDateString("es-ES");
+  const fechaHastaFormateada = new Date(fechaHasta).toLocaleDateString("es-ES");
+
+  // Incluir las fechas en el nombre del archivo
+  a.download = `pedidos(${fechaDesdeFormateada}-${fechaHastaFormateada}).xlsx`;
+
   document.body.appendChild(a); // Necesario para Firefox
   a.click();
   a.remove(); // Necesario para Firefox
