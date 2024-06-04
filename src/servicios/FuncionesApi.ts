@@ -14,13 +14,11 @@ export async function getInstrumentoJSONFetch() {
     },
     mode: "cors",
   });
-  console.log(response);
   return await response.json();
 }
 
 export async function getInstrumentoXIdFetch(id: number) {
   const urlServer = "http://localhost:8080/Instrumento/traer/" + id;
-  console.log(urlServer);
   const response = await fetch(urlServer, {
     method: "GET",
     headers: {
@@ -54,7 +52,6 @@ export async function getInstrumentoXBusqueda(termino: String) {
     },
     mode: "cors",
   });
-  console.log(response);
   return await response.json();
 }
 
@@ -81,7 +78,6 @@ export async function getCategoriaDataBaseJson() {
     },
     mode: "cors",
   });
-  console.log(response);
   return await response.json();
 }
 

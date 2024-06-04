@@ -19,7 +19,6 @@ function MenuOpciones() {
   };
 
   const [jsonUsuario] = useState<any>(localStorage.getItem("usuario"));
-  console.log("JSON " + jsonUsuario);
   const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
 
   return (
