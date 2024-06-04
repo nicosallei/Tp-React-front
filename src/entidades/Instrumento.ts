@@ -14,4 +14,5 @@ export default class Instrumento {
   categoria?: Categoria;
   cantidad: number = 1;
   addCarrito?: ChangeEventHandler;
+  eliminado?: boolean;
 }

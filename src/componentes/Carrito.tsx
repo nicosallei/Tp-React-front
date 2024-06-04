@@ -38,7 +38,7 @@ function CartItem({ item }: { item: PedidoDetalle }) {
 }
 
 export function Carrito() {
-  const { cart, limpiarCarrito, totalPedido } = useCarrito();
+  const { cart, limpiarCarrito } = useCarrito();
   const [data, setData] = useState<Pedido>(new Pedido());
   const [pedidoRealizado, setPedidoRealizado] = useState(false);
 

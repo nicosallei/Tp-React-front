@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Instrumento from "../entidades/Instrumento";
 import {
-  deleteInstrumentoXId,
-  getInstrumentoJSONFetch,
+  cambiarEstadoInstrumento,
+  traerTodosInstrumentos,
 } from "../servicios/FuncionesApi";
 import MenuOpciones from "./MenuOpciones";
 import Usuario from "../entidades/Usuario";
@@ -10,9 +10,11 @@ import { Roles } from "../entidades/Roles";
 import ModalFormulario from "../componentes/Formulario";
 import { descargarExcel } from "../servicios/FuncionesApi";
 import ModalExcel from "./ModalExcel";
+import { Switch } from "antd";
 
 function GrillaInstrumento() {
   const [fechaInicio, setFechaInicio] = useState<string>("");
+
   const [fechaFin, setFechaFin] = useState<string>("");
   const [showModalExcel, setShowModalExcel] = useState(false);
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
@@ -23,7 +25,7 @@ function GrillaInstrumento() {
     useState<Instrumento | null>(null);
 
   const getInstrumentos = async () => {
-    const datos: Instrumento[] = await getInstrumentoJSONFetch();
+    const datos: Instrumento[] = await traerTodosInstrumentos();
     setInstrumentos(datos);
   };
 
@@ -32,7 +34,24 @@ function GrillaInstrumento() {
   }, []);
 
   const deleteInstrumento = async (id: number) => {
-    await deleteInstrumentoXId(id).then(() => window.location.reload());
+    await cambiarEstadoInstrumento(id).then(() => window.location.reload());
+  };
+
+  const toggleInstrumento = async (id: number) => {
+    const instrumento = instrumentos.find(
+      (instrumento) => instrumento.id === id
+    );
+    if (!instrumento) return;
+
+    const nuevoEstado = !instrumento.eliminado;
+    await deleteInstrumento(id);
+    setInstrumentos(
+      instrumentos.map((instrumento) =>
+        instrumento.id === id
+          ? { ...instrumento, eliminado: nuevoEstado }
+          : instrumento
+      )
+    );
   };
 
   const handleOpenModal = (instrumento?: Instrumento) => {
@@ -119,7 +138,15 @@ function GrillaInstrumento() {
             )}
           </div>
           {instrumentos.map((instrumento: Instrumento) => (
-            <div className="row border" key={instrumento.id}>
+            <div
+              className="row border"
+              key={instrumento.id}
+              style={{
+                backgroundColor: instrumento.eliminado
+                  ? "rgba(255, 42, 0, 0.7)"
+                  : "transparent",
+              }}
+            >
               <div className="col-1 border-end">{instrumento.id}</div>
               <div className="col-5 border-end text-start">
                 {instrumento.instrumento}
@@ -131,10 +158,14 @@ function GrillaInstrumento() {
                 {instrumento.cantidadVendida}
               </div>
               <div className="col-1 border-end">{instrumento.precio}</div>
-              <div className="col-1 border-end">
+              <div className="col-1 border-end d-flex align-items-center justify-content-center">
                 <button
                   className="btn btn-info"
-                  style={{ marginBottom: 10 }}
+                  style={{
+                    marginBottom: 10,
+                    fontSize: "0.8rem",
+                    padding: "5px 10px",
+                  }}
                   onClick={() => handleOpenModal(instrumento)}
                 >
                   Modificar
@@ -142,13 +173,10 @@ function GrillaInstrumento() {
               </div>
               {usuarioLogueado.rol == Roles.ADMIN ? (
                 <div className="col-1 border-end">
-                  <a
-                    className="btn btn-danger"
-                    style={{ marginBottom: 10 }}
-                    onClick={() => deleteInstrumento(instrumento.id)}
-                  >
-                    Eliminar
-                  </a>
+                  <Switch
+                    checked={instrumento.eliminado}
+                    onChange={() => toggleInstrumento(instrumento.id)}
+                  />
                 </div>
               ) : (
                 <div className="col-1 border-end"></div>

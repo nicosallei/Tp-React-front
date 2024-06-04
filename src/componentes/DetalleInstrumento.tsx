@@ -59,10 +59,10 @@ function DetalleInstrumento({
       <Modal
         visible={isOpen}
         onCancel={closeModal}
-        width="85%"
+        width="60%"
         centered
         bodyStyle={{
-          height: "85%",
+          height: "60%",
           margin: "auto",
           top: "0",
           left: "0",
@@ -132,9 +132,8 @@ function DetalleInstrumento({
                   <img
                     src={pdfIcon}
                     alt="Descargar PDF"
-                    style={{ width: "30px", height: "30px" }}
+                    style={{ width: "50px", height: "50px" }}
                   />{" "}
-                  // Ajusta el tamaño de la imagen
                 </button>
                 {/* <a href="/menu">
                   <button

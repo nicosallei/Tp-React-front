@@ -17,6 +17,20 @@ export async function getInstrumentoJSONFetch() {
   return await response.json();
 }
 
+export async function traerTodosInstrumentos() {
+  const urlServer = "http://localhost:8080/Instrumento/traer-todo";
+
+  const response = await fetch(urlServer, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    mode: "cors",
+  });
+  return await response.json();
+}
+
 export async function getInstrumentoXIdFetch(id: number) {
   const urlServer = "http://localhost:8080/Instrumento/traer/" + id;
   const response = await fetch(urlServer, {
@@ -30,8 +44,8 @@ export async function getInstrumentoXIdFetch(id: number) {
   return (await response.json()) as Instrumento;
 }
 
-export async function deleteInstrumentoXId(id: number) {
-  const urlServer = "http://localhost:8080/Instrumento/borrar/" + id;
+export async function cambiarEstadoInstrumento(id: number) {
+  const urlServer = "http://localhost:8080/Instrumento/estado/" + id;
   await fetch(urlServer, {
     method: "DELETE",
     headers: {
