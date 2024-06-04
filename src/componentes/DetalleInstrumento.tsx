@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Instrumento from "../entidades/Instrumento";
 import "../componentes/css/ItemInstrumento.css";
 import { Modal } from "antd";
+import { descargarPdf } from "../servicios/FuncionesApi";
+import pdfIcon from "../assets/img/pdf.png";
 
 type DetalleInstrumentoProps = {
   isOpen: boolean;
@@ -21,6 +23,14 @@ function DetalleInstrumento({
   useEffect(() => {
     setInstrumento(instrumento);
   }, [instrumento]);
+
+  const handlePdfDownload = async () => {
+    try {
+      await descargarPdf(instrumentoData.id, instrumentoData.instrumento);
+    } catch (error) {
+      console.error("Error al descargar el PDF:", error);
+    }
+  };
 
   function renderCostoEnvio() {
     if (instrumentoData?.costoEnvio === "G") {
@@ -111,6 +121,21 @@ function DetalleInstrumento({
                 </a>
               </div>
               <div className="card-footer text-body-secondary">
+                <button
+                  onClick={handlePdfDownload}
+                  style={{
+                    border: "none",
+                    background: "none",
+                    marginBottom: "10px",
+                  }} // Añade margen en la parte inferior
+                >
+                  <img
+                    src={pdfIcon}
+                    alt="Descargar PDF"
+                    style={{ width: "30px", height: "30px" }}
+                  />{" "}
+                  // Ajusta el tamaño de la imagen
+                </button>
                 {/* <a href="/menu">
                   <button
                     type="button"

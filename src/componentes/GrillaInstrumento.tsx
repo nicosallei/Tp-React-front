@@ -66,9 +66,7 @@ function GrillaInstrumento() {
       console.error("Error al descargar Excel: ", error);
     }
   };
-  useEffect(() => {
-    console.log(showModalExcel); // Ahora imprimirá el valor actualizado
-  }, [showModalExcel]);
+  useEffect(() => {}, [showModalExcel]);
 
   return (
     <>
