@@ -89,7 +89,8 @@ export async function saveInstrumento(instrumento?: Instrumento) {
   let urlServer = "http://localhost:8080/Instrumento/guardar";
   let method: string = "POST";
   if (instrumento && instrumento.id > 0) {
-    urlServer = "http://localhost:8080/Instrumento/actualizar";
+    urlServer =
+      "http://localhost:8080/Instrumento/actualizar/" + instrumento.id;
     method = "PUT";
   }
   await fetch(urlServer, {

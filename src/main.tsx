@@ -16,10 +16,8 @@ import Registro from "./componentes/CrearUsuario.tsx";
 //lazy -> técnica de carga diferida, el componente se carga cuando se necesita y NO desde el inicio
 //ayudar a reducir el tiempo de carga inicial de la aplicación y a mejorar la velocidad de navegación
 
-const Menu = lazy(() => import("./componentes/Menu"));
 const GrillaInstrumento = lazy(() => import("./componentes/GrillaInstrumento"));
-const CheckoutMP = lazy(() => import("./componentes/CheckoutMP"));
-const Formulario = lazy(() => import("./componentes/Formulario"));
+
 const TestLoad = lazy(() => import("./componentes/TestLoad"));
 const Graficos = lazy(() => import("./componentes/ChartsGoogle.tsx"));
 
@@ -79,16 +77,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </RutaPrivada>
             }
           />
-          <Route
-            path="/formulario/:idInstrumento"
-            element={
-              <RutaPrivada>
-                <RolUsuario rol={Roles.ADMIN}>
-                  <Formulario />
-                </RolUsuario>
-              </RutaPrivada>
-            }
-          />
+
           <Route
             path="/graficos"
             element={

@@ -7,15 +7,15 @@ import {
 import MenuOpciones from "./MenuOpciones";
 import Usuario from "../entidades/Usuario";
 import { Roles } from "../entidades/Roles";
-import { useNavigate } from "react-router-dom";
+import ModalFormulario from "../componentes/Formulario";
 
 function GrillaInstrumento() {
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
-  const navigate = useNavigate();
-  const [jsonUsuario, setJSONUsuario] = useState<any>(
-    localStorage.getItem("usuario")
-  );
+  const [jsonUsuario] = useState<any>(localStorage.getItem("usuario"));
   const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
+  const [showModal, setShowModal] = useState(false);
+  const [selectedInstrumento, setSelectedInstrumento] =
+    useState<Instrumento | null>(null);
 
   const getInstrumentos = async () => {
     const datos: Instrumento[] = await getInstrumentoJSONFetch();
@@ -27,8 +27,18 @@ function GrillaInstrumento() {
   }, []);
 
   const deleteInstrumento = async (id: number) => {
-    await deleteInstrumentoXId(id);
-    window.location.reload();
+    await deleteInstrumentoXId(id).then(() => window.location.reload());
+  };
+
+  const handleOpenModal = (instrumento?: Instrumento) => {
+    setSelectedInstrumento(instrumento || null);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = async () => {
+    setSelectedInstrumento(null);
+    setShowModal(false);
+    await getInstrumentos(); // Recarga los instrumentos cuando se cierra el modal
   };
 
   return (
@@ -38,9 +48,12 @@ function GrillaInstrumento() {
         <div className="container-fluid text-center">
           <br />
           <div className="d-flex justify-content-end mb-3">
-            <a className="btn btn-primary" href={`/formulario/0`}>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleOpenModal()}
+            >
               Nuevo
-            </a>
+            </button>
           </div>
           <div className="row border">
             <div className="col-1 border-end">
@@ -83,20 +96,20 @@ function GrillaInstrumento() {
               </div>
               <div className="col-1 border-end">{instrumento.precio}</div>
               <div className="col-1 border-end">
-                <a
+                <button
                   className="btn btn-info"
                   style={{ marginBottom: 10 }}
-                  onClick={() => navigate(`/formulario/` + instrumento.id)}
+                  onClick={() => handleOpenModal(instrumento)}
                 >
                   Modificar
-                </a>
+                </button>
               </div>
               {usuarioLogueado.rol == Roles.ADMIN ? (
                 <div className="col-1 border-end">
                   <a
                     className="btn btn-danger"
                     style={{ marginBottom: 10 }}
-                    onClick={(e) => deleteInstrumento(instrumento.id)}
+                    onClick={() => deleteInstrumento(instrumento.id)}
                   >
                     Eliminar
                   </a>
@@ -108,6 +121,13 @@ function GrillaInstrumento() {
           ))}
         </div>
       </div>
+      {showModal && (
+        <ModalFormulario
+          initialInstrumento={selectedInstrumento}
+          onClose={handleCloseModal}
+        />
+      )}{" "}
+      {/* Asegúrate de pasar el instrumento seleccionado y la función de cierre como props al componente de modal */}
     </>
   );
 }
