@@ -5,6 +5,8 @@ import Instrumento from "../entidades/Instrumento";
 import { useCarrito } from "../hooks/useCarrito";
 import addCart from "../assets/img/addCart.png";
 import deleteCart from "../assets/img/deleteCart.png";
+import pdfIcon from "../assets/img/pdf.png";
+import { descargarPdf } from "../servicios/FuncionesApi";
 
 type InstrumentoParams = {
   id: number;
@@ -34,6 +36,14 @@ function ItemInstrumento(arg: InstrumentoParams) {
     return false;
   }, [cart, arg.instrumentoObject.id]);
 
+  const handlePdfDownload = async (id: number, nombreInstrumento: string) => {
+    try {
+      await descargarPdf(id, nombreInstrumento);
+    } catch (error) {
+      console.error("Error al descargar el PDF:", error);
+    }
+  };
+
   const renderCostoEnvio = () => {
     if (arg.costoEnvio === "G") {
       return (
@@ -59,6 +69,18 @@ function ItemInstrumento(arg: InstrumentoParams) {
   return (
     <>
       <div className="card mb-3 ">
+        <img
+          src={pdfIcon}
+          alt="Descargar PDF"
+          onClick={() => handlePdfDownload(arg.id, arg.instrumento)}
+          style={{
+            cursor: "pointer", // Esto hace que el cursor se convierta en una mano al pasar sobre el icono
+            width: "42px", // Esto hace que la imagen sea más pequeña
+            position: "absolute", // Esto posiciona la imagen en relación con la tarjeta
+            right: "30px", // Esto mueve la imagen al extremo derecho de la tarjeta
+            top: "30px", // Esto posiciona la imagen en la parte superior de la tarjeta
+          }}
+        />
         <div className="row g-0 mi-clase-personalizada">
           <div className="col-md-4 card-body mi-imagen">
             <img
@@ -72,6 +94,7 @@ function ItemInstrumento(arg: InstrumentoParams) {
               <h5 className="card-title">{arg.instrumento}</h5>
               <p className="card-text">Precio: ${arg.precio}</p>
               <p className="card-text">{renderCostoEnvio()}</p>
+
               <p className="card-text">vendidos: {arg.cantidadVendida}</p>
               <a href={`detalle/${arg.id}`}>
                 <button type="button" className="btn btn-warning">
