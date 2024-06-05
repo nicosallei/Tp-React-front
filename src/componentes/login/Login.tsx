@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Usuario from "../entidades/Usuario";
+import Usuario from "../../entidades/Usuario";
 import * as CryptoJS from "crypto-js";
-import "./css/login.css";
+import "./login.css";
 
 function Login() {
   const navigate = useNavigate();

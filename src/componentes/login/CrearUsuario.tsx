@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as CryptoJS from "crypto-js";
-import "./css/crearUsuario.css";
+import "./crearUsuario.css";
 
 interface Usuario {
   nombre: string;

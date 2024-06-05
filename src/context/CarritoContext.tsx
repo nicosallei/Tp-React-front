@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import Instrumento from "../entidades/Instrumento";
 import PedidoDetalle from "../entidades/PedidoDetalle";
-import Pedido from "../entidades/Pedido";
 
 interface CartContextType {
   cart: PedidoDetalle[];

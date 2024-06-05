@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import Instrumento from "../entidades/Instrumento";
+import Instrumento from "../../../entidades/Instrumento";
 import {
   cambiarEstadoInstrumento,
   traerTodosInstrumentos,
-} from "../servicios/FuncionesApi";
-import MenuOpciones from "./MenuOpciones";
-import Usuario from "../entidades/Usuario";
-import { Roles } from "../entidades/Roles";
-import ModalFormulario from "../componentes/Formulario";
-import { descargarExcel } from "../servicios/FuncionesApi";
+} from "../../../servicios/FuncionesApi";
+import MenuOpciones from "../../navbar/MenuOpciones";
+import Usuario from "../../../entidades/Usuario";
+import { Roles } from "../../../entidades/Roles";
+import ModalFormulario from "./Formulario";
+import { descargarExcel } from "../../../servicios/FuncionesApi";
 import ModalExcel from "./ModalExcel";
 import { Switch } from "antd";
 

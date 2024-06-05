@@ -1,5 +1,5 @@
 import "./Home.css";
-import MenuOpciones from "../src/componentes/MenuOpciones";
+import MenuOpciones from "../../navbar/MenuOpciones";
 
 function Home() {
   return (

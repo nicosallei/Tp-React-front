@@ -1,25 +1,29 @@
 import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Producto from "./componentes/Menu.tsx";
+import Producto from "./componentes/page/producto-compra/Menu.tsx";
 //import DetalleInstrumento from "./componentes/DetalleInstrumento.tsx";
-import Home from "./Home.tsx";
-import DondeEstamos from "./DondeEstamos.tsx";
+import Home from "./componentes/page/home/Home.tsx";
+import DondeEstamos from "./componentes/page/donde estamos/DondeEstamos.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RutaPrivada } from "./controlAcceso/RutaPrivada.tsx";
-import LoaderPage from "./componentes/LoaderPage.tsx";
+import LoaderPage from "./componentes/utiles/LoaderPage.tsx";
 import { Roles } from "./entidades/Roles.ts";
 import RolUsuario from "./controlAcceso/RolUsuario.tsx";
-import Login from "./componentes/Login.tsx";
-import Registro from "./componentes/CrearUsuario.tsx";
+import Login from "./componentes/login/Login.tsx";
+import Registro from "./componentes/login/CrearUsuario.tsx";
 //lazy -> técnica de carga diferida, el componente se carga cuando se necesita y NO desde el inicio
 //ayudar a reducir el tiempo de carga inicial de la aplicación y a mejorar la velocidad de navegación
 
-const GrillaInstrumento = lazy(() => import("./componentes/GrillaInstrumento"));
+const GrillaInstrumento = lazy(
+  () => import("./componentes/page/grilla/GrillaInstrumento.tsx")
+);
 
-const TestLoad = lazy(() => import("./componentes/TestLoad"));
-const Graficos = lazy(() => import("./componentes/ChartsGoogle.tsx"));
+const TestLoad = lazy(() => import("./componentes/utiles/TestLoad.tsx"));
+const Graficos = lazy(
+  () => import("./componentes/page/graficos/ChartsGoogle.tsx")
+);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

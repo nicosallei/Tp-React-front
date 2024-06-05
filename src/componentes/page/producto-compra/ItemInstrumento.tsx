@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
-import "../componentes/css/ItemInstrumento.css";
-import Categoria from "../entidades/Categoria";
-import Instrumento from "../entidades/Instrumento";
-import { useCarrito } from "../hooks/useCarrito";
-import addCart from "../assets/img/addCart.png";
-import deleteCart from "../assets/img/deleteCart.png";
-import pdfIcon from "../assets/img/pdf.png";
-import { descargarPdf } from "../servicios/FuncionesApi";
+import "./ItemInstrumento.css";
+import Categoria from "../../../entidades/Categoria";
+import Instrumento from "../../../entidades/Instrumento";
+import { useCarrito } from "../../../hooks/useCarrito";
+import addCart from "../../../assets/img/addCart.png";
+import deleteCart from "../../../assets/img/deleteCart.png";
+import pdfIcon from "../../../assets/img/pdf.png";
+import { descargarPdf } from "../../../servicios/FuncionesApi";
 import DetalleInstrumento from "./DetalleInstrumento";
 
 type InstrumentoParams = {

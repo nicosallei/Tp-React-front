@@ -1,11 +1,11 @@
 import { Chart } from "react-google-charts";
 import { useEffect, useState } from "react";
-import MenuOpciones from "./MenuOpciones";
+import MenuOpciones from "../../navbar/MenuOpciones";
 import {
   getPedidosPorMesAnio,
   getPedidosPorInstrumento,
   getPedidosGroupedByWeek,
-} from "../servicios/FuncionesApi";
+} from "../../../servicios/FuncionesApi";
 
 const ChartsGoogle = () => {
   const [chartType, setChartType] = useState<"mes" | "semana">("mes");

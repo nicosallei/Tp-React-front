@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Instrumento from "../entidades/Instrumento";
+import Instrumento from "../../../entidades/Instrumento";
 import { useNavigate } from "react-router-dom";
 import {
   getCategoriaDataBaseJson,
   getInstrumentoXIdFetch,
   saveInstrumento,
-} from "../servicios/FuncionesApi";
-import Categoria from "../entidades/Categoria";
+} from "../../../servicios/FuncionesApi";
+import Categoria from "../../../entidades/Categoria";
 
 import { Modal } from "antd";
 
