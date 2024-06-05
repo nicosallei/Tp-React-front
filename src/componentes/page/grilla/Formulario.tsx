@@ -61,11 +61,6 @@ function ModalFormulario({
     setCategorias(categoriasFromDb);
   };
 
-  useEffect(() => {
-    getInstrumento();
-    getCategorias();
-  }, []);
-
   const validateForm = () => {
     if (!instrumento.instrumento) {
       setTxtValidacion("El campo nombre es obligatorio");
@@ -156,7 +151,20 @@ function ModalFormulario({
   };
 
   useEffect(() => {
-    getInstrumento();
+    getInstrumento().then(() => {
+      let costoEnvio = instrumento.costoEnvio;
+      if (
+        costoEnvio !== "" &&
+        costoEnvio.toUpperCase() !== "G" &&
+        (isNaN(Number(costoEnvio)) || Number(costoEnvio) < 0)
+      ) {
+        costoEnvio = "G";
+      }
+      setInstrumento({
+        ...instrumento,
+        costoEnvio: costoEnvio.toUpperCase(),
+      });
+    });
     getCategorias();
     showModal();
   }, []);
@@ -271,7 +279,6 @@ function ModalFormulario({
                 </div>
               </div>
               <div className="col-lg-6">
-                {/* Aquí van los campos de la segunda columna */}
                 <div className="mb-3">
                   <label className="form-label">Costo de envio</label>
                   <input
@@ -279,20 +286,18 @@ function ModalFormulario({
                     className="form-control"
                     value={instrumento.costoEnvio}
                     onChange={(e) => {
-                      const value = e.target.value;
+                      let value = e.target.value;
                       if (
                         value === "" ||
                         value.toUpperCase() === "G" ||
-                        Number(value) >= 0
+                        (!isNaN(Number(value)) && Number(value) >= 0)
                       ) {
+                        if (isNaN(Number(value)) && value !== "") {
+                          value = "G";
+                        }
                         setInstrumento({
                           ...instrumento,
-                          costoEnvio:
-                            value === "0"
-                              ? "G"
-                              : value.toUpperCase() === "G"
-                              ? "G"
-                              : value,
+                          costoEnvio: value.toUpperCase(),
                         });
                       }
                     }}
@@ -313,7 +318,7 @@ function ModalFormulario({
                     min="0"
                     onChange={(e) => {
                       const value = Number(e.target.value);
-                      if (value >= 0 || e.target.value === "") {
+                      if (value >= 0) {
                         setInstrumento({
                           ...instrumento,
                           cantidadVendida: value,
@@ -327,7 +332,8 @@ function ModalFormulario({
                       instrumento.cantidadVendida === null ||
                       instrumento.cantidadVendida < 0) && (
                       <div style={{ color: "red" }}>
-                        El campo cantidad vendida es obligatorio
+                        El campo cantidad vendida es obligatorio y no puede ser
+                        negativo
                       </div>
                     )}
                 </div>
