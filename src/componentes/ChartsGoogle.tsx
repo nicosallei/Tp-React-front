@@ -4,10 +4,12 @@ import MenuOpciones from "./MenuOpciones";
 import {
   getPedidosPorMesAnio,
   getPedidosPorInstrumento,
+  getPedidosGroupedByWeek,
 } from "../servicios/FuncionesApi";
 
 const ChartsGoogle = () => {
-  const [barChartData, setBarChartData] = useState<(string | number)[][]>([
+  const [chartType, setChartType] = useState<"mes" | "semana">("mes");
+  const [chartData, setChartData] = useState<(string | number)[][]>([
     ["Mes", "Pedidos"],
   ]);
   const [pieChartData, setPieChartData] = useState<(string | number)[][]>([
@@ -15,26 +17,23 @@ const ChartsGoogle = () => {
   ]);
 
   useEffect(() => {
-    // Obtén los datos para el gráfico de barras
-    getPedidosPorMesAnio().then((data) => {
-      let groupedData: { [key: string]: number } = {};
+    let apiFunction;
 
-      Object.entries(data).forEach(([key, value]) => {
-        if (groupedData[key]) {
-          groupedData[key] += Number(value);
-        } else {
-          groupedData[key] = Number(value);
-        }
-      });
+    switch (chartType) {
+      case "mes":
+        apiFunction = getPedidosPorMesAnio;
+        break;
+      case "semana":
+        apiFunction = getPedidosGroupedByWeek;
+        break;
+    }
 
-      // Ordena los datos por mes y año
-      const sortedData = Object.entries(groupedData).sort();
-
-      // Convierte los datos a formato de gráfico
-      const chartData = sortedData.map(([key, value]) => [key, Number(value)]);
-
-      // Reemplaza los datos existentes en lugar de agregar a ellos
-      setBarChartData([["Mes", "Pedidos"], ...chartData]);
+    apiFunction().then((data) => {
+      const chartData = Object.entries(data).map(([key, value]) => [
+        key,
+        Number(value),
+      ]);
+      setChartData([["Mes", "Pedidos"], ...chartData]);
     });
 
     // Obtén los datos para el gráfico de pastel
@@ -45,31 +44,45 @@ const ChartsGoogle = () => {
       ]);
       setPieChartData([["Instrumento", "Pedidos"], ...chartData]);
     });
-  }, []);
+  }, [chartType]);
 
   return (
     <>
       <div className="container-fluid text-center">
         <MenuOpciones></MenuOpciones>
-        <div>
-          <Chart
-            width={"500px"}
-            height={"300px"}
-            chartType="Bar"
-            loader={<div>Loading Chart</div>}
-            data={barChartData}
-            options={{
-              title: "Cantidad de pedidos por mes",
-              chartArea: { width: "50%" },
-              hAxis: {
-                title: "Total de pedidos",
-                minValue: 0,
-              },
-              vAxis: {
-                title: "Mes",
-              },
-            }}
-          />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <select
+                value={chartType}
+                onChange={(e) =>
+                  setChartType(e.target.value as "mes" | "semana")
+                }
+                style={{ fontSize: "24px", marginBottom: "20px", width: "50%" }}
+              >
+                <option value="mes">Mes</option>
+                <option value="semana">Semana</option>
+              </select>
+            </div>
+            <Chart
+              width={"500px"}
+              height={"300px"}
+              chartType="Bar"
+              loader={<div>Loading Chart</div>}
+              data={chartData}
+              options={{
+                title: `Cantidad de pedidos por ${chartType}`,
+                chartArea: { width: "50%" },
+                hAxis: {
+                  title: `Total de pedidos por ${chartType}`,
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: chartType.charAt(0).toUpperCase() + chartType.slice(1),
+                },
+              }}
+            />
+          </div>
           <Chart
             width={"500px"}
             height={"300px"}

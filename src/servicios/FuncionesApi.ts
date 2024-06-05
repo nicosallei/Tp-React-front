@@ -268,3 +268,16 @@ export async function descargarExcel(fechaDesde: string, fechaHasta: string) {
   a.click();
   a.remove(); // Necesario para Firefox
 }
+
+export async function getPedidosGroupedByWeek() {
+  const urlServer = "http://localhost:8080/Pedido/grouped-by-week";
+  const response = await fetch(urlServer, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    mode: "cors",
+  });
+  return await response.json();
+}
