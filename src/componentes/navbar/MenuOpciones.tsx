@@ -1,8 +1,8 @@
-import "../App.css";
+import "../../App.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Usuario from "../entidades/Usuario";
-import { Roles } from "../entidades/Roles";
+import Usuario from "../../entidades/Usuario";
+import { Roles } from "../../entidades/Roles";
 
 function MenuOpciones() {
   const navigate = useNavigate();

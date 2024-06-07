@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Instrumento from "../entidades/Instrumento";
-import { getInstrumentoJSONFetch } from "../servicios/FuncionesApi";
+import Instrumento from "../../../entidades/Instrumento";
+import { getInstrumentoJSONFetch } from "../../../servicios/FuncionesApi";
 import ItemInstrumento from "./ItemInstrumento";
-import MenuOpciones from "./MenuOpciones";
+import MenuOpciones from "../../navbar/MenuOpciones";
 
 import { Carrito } from "./Carrito";
-import { CarritoContextProvider } from "../context/CarritoContext";
+import { CarritoContextProvider } from "../../../context/CarritoContext";
 
 function Menu() {
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);

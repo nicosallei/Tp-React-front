@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Instrumento from "../entidades/Instrumento";
-import "../componentes/css/ItemInstrumento.css";
+import Instrumento from "../../../entidades/Instrumento";
+import "./ItemInstrumento.css";
 import { Modal } from "antd";
-import { descargarPdf } from "../servicios/FuncionesApi";
-import pdfIcon from "../assets/img/pdf.png";
+import { descargarPdf } from "../../../servicios/FuncionesApi";
+import pdfIcon from "../../../assets/img/pdf.png";
 
 type DetalleInstrumentoProps = {
   isOpen: boolean;

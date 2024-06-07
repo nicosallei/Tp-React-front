@@ -1,11 +1,11 @@
-import Pedido from "../entidades/Pedido";
-import PedidoDetalle from "../entidades/PedidoDetalle";
-import { useCarrito } from "../hooks/useCarrito";
-import { realizarPedido } from "../servicios/FuncionesApi";
-import CheckoutMP from "../componentes/CheckoutMP";
+import Pedido from "../../../entidades/Pedido";
+import PedidoDetalle from "../../../entidades/PedidoDetalle";
+import { useCarrito } from "../../../hooks/useCarrito";
+import { realizarPedido } from "../../../servicios/FuncionesApi";
+import CheckoutMP from "../../mercado pago/CheckoutMP";
 import { useState } from "react";
-import { createPreferenceMP } from "../servicios/FuncionesApi";
-import PreferenceMP from "../entidades/mercadoPago/PreferenceMP";
+import { createPreferenceMP } from "../../../servicios/FuncionesApi";
+import PreferenceMP from "../../../entidades/mercadoPago/PreferenceMP";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

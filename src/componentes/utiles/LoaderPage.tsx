@@ -1,4 +1,4 @@
-import "../componentes/css/LoaderPage.css";
+import "./LoaderPage.css";
 
 function LoaderPage() {
   return (

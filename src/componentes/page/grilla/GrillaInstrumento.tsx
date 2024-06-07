@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import Instrumento from "../entidades/Instrumento";
+import Instrumento from "../../../entidades/Instrumento";
 import {
   cambiarEstadoInstrumento,
   traerTodosInstrumentos,
-} from "../servicios/FuncionesApi";
-import MenuOpciones from "./MenuOpciones";
-import Usuario from "../entidades/Usuario";
-import { Roles } from "../entidades/Roles";
-import ModalFormulario from "../componentes/Formulario";
-import { descargarExcel } from "../servicios/FuncionesApi";
+} from "../../../servicios/FuncionesApi";
+import MenuOpciones from "../../navbar/MenuOpciones";
+import Usuario from "../../../entidades/Usuario";
+import { Roles } from "../../../entidades/Roles";
+import ModalFormulario from "./Formulario";
+import { descargarExcel } from "../../../servicios/FuncionesApi";
 import ModalExcel from "./ModalExcel";
 import { Switch } from "antd";
+import icoExcel from "../../../assets/img/excel.png";
 
 function GrillaInstrumento() {
   const [fechaInicio, setFechaInicio] = useState<string>("");
@@ -98,8 +99,25 @@ function GrillaInstrumento() {
             <button
               className="btn btn-success me-3"
               onClick={() => handleOpenModalExcel()}
+              style={{
+                padding: 0,
+                display: "flex",
+                alignItems: "center",
+                width: "80px", // Ajusta el ancho del botón
+                height: "35px", // Ajusta la altura del botón
+                fontSize: "0.7rem", // Ajusta el tamaño de la fuente
+              }} // Añade display: 'flex' y alignItems: 'center'
             >
-              Descargar Excel
+              <img
+                src={icoExcel}
+                alt="Descargar Excel"
+                style={{
+                  display: "block",
+                  width: "40%", // Cambia el ancho al 50% para dejar espacio para el texto
+                  height: "100%",
+                }}
+              />
+              <span>Exportar Excel</span>
             </button>
 
             <button

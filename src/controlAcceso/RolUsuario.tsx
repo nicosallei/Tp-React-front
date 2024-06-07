@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Roles } from "../entidades/Roles";
 import Usuario from "../entidades/Usuario";
 import { useState } from "react";
@@ -9,9 +9,7 @@ interface Props {
 }
 
 function RolUsuario({ rol, children }: Props) {
-  const [jsonUsuario, setJSONUsuario] = useState<any>(
-    localStorage.getItem("usuario")
-  );
+  const [jsonUsuario] = useState<any>(localStorage.getItem("usuario"));
   const usuarioLogueado: Usuario = JSON.parse(jsonUsuario) as Usuario;
   //si esta logueado y es administrador lo dejo ingresar si no
 
