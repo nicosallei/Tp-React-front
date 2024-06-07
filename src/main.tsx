@@ -33,7 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
         <Routes>
           <Route path="/registro" element={<Registro />} />
-          <Route index element={<Home />} />
+          {/* <Route index element={<Home />} /> */}
           <Route path="/login" element={<Login />} />
           <Route
             path="/menu"

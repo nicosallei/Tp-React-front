@@ -51,7 +51,7 @@ const ChartsGoogle = () => {
       <div className="container-fluid text-center">
         <MenuOpciones></MenuOpciones>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
+          <div >
             <div style={{ display: "flex", justifyContent: "center" }}>
               <select
                 value={chartType}
@@ -94,7 +94,28 @@ const ChartsGoogle = () => {
             }}
           />
         </div>
+     <div style={{ width: "100%" }}>
+  <Chart
+    width={"100%"}
+    height={"300px"}
+    chartType="LineChart"
+    loader={<div>Loading Chart</div>}
+    data={chartData}
+    options={{
+      title: `Cantidad de pedidos por ${chartType}`,
+      chartArea: { width: "50%" },
+      hAxis: {
+        title: `Total de pedidos por ${chartType}`,
+        minValue: 0,
+      },
+      vAxis: {
+        title: chartType.charAt(0).toUpperCase() + chartType.slice(1),
+      },
+    }}
+  />
+</div>
       </div>
+
     </>
   );
 };
